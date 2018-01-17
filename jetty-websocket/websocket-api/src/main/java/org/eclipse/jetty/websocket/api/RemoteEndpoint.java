@@ -166,7 +166,9 @@ public interface RemoteEndpoint
      * Get the InetSocketAddress for the established connection.
      *
      * @return the InetSocketAddress for the established connection. (or null, if the connection is no longer established)
+     * @deprecated will be removed in Jetty 10.x - use {@link Session#getLocalSocketAddress()} or {@link Session#getRemoteSocketAddress()} instead.
      */
+    @Deprecated
     InetSocketAddress getInetSocketAddress();
     
     /**

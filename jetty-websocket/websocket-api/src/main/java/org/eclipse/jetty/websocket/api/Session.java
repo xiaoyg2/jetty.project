@@ -21,6 +21,7 @@ package org.eclipse.jetty.websocket.api;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
 
@@ -106,8 +107,22 @@ public interface Session extends Closeable
      * Get the address of the local side.
      * 
      * @return the local side address
+     * @deprecated will be removed in Jetty 10.x - use {@link #getRemoteSocketAddress()} instead
      */
-    public InetSocketAddress getLocalAddress();
+    @Deprecated
+    InetSocketAddress getLocalAddress();
+
+    /**
+     * Get the address of the local side.
+     * <p>
+     *     Do not assume that this will return a {@link InetSocketAddress} in all cases.
+     *     Use of various proxies, and even UnixSockets can result a SocketAddress being returned
+     *     without supporting {@link InetSocketAddress}
+     * </p>
+     *
+     * @return the local side address
+     */
+    SocketAddress getLocalSocketAddress();
 
     /**
      * Access the (now read-only) {@link WebSocketPolicy} in use for this connection.
@@ -135,8 +150,22 @@ public interface Session extends Closeable
      * Get the address of the remote side.
      * 
      * @return the remote side address
+     * @deprecated will be removed in Jetty 10.x - use {@link #getRemoteSocketAddress()} instead
      */
-    public InetSocketAddress getRemoteAddress();
+    @Deprecated
+    InetSocketAddress getRemoteAddress();
+
+    /**
+     * Get the address of the remote side.
+     * <p>
+     *     Do not assume that this will return a {@link InetSocketAddress} in all cases.
+     *     Use of various proxies, and even UnixSockets can result a SocketAddress being returned
+     *     without supporting {@link InetSocketAddress}
+     * </p>
+     *
+     * @return the remote side address
+     */
+    SocketAddress getRemoteSocketAddress();
 
     /**
      * Get the UpgradeRequest used to create this session

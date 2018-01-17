@@ -20,6 +20,7 @@ package org.eclipse.jetty.websocket.common;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -371,7 +372,14 @@ public class WebSocketSession extends ContainerLifeCycle implements Session, Rem
     }
 
     @Override
+    @Deprecated
     public InetSocketAddress getLocalAddress()
+    {
+        return connection.getLocalAddress();
+    }
+
+    @Override
+    public SocketAddress getLocalSocketAddress()
     {
         return connection.getLocalAddress();
     }
@@ -410,9 +418,16 @@ public class WebSocketSession extends ContainerLifeCycle implements Session, Rem
     }
 
     @Override
+    @Deprecated
     public InetSocketAddress getRemoteAddress()
     {
-        return remote.getInetSocketAddress();
+        return connection.getRemoteAddress();
+    }
+
+    @Override
+    public SocketAddress getRemoteSocketAddress()
+    {
+        return connection.getRemoteAddress();
     }
 
     public URI getRequestURI()

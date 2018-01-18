@@ -38,10 +38,10 @@ public interface LogicalConnection extends OutgoingFrames, SuspendToken
 
     /**
      * Terminate the connection (no close frame sent)
-     * @deprecated use {@link #abort()} instead
+     * @deprecated Will be removed in Jetty 10.x - use {@link #abort()} instead
      */
     @Deprecated
-    void disconnect();
+    default void disconnect() { abort(); }
 
     /**
      * Terminate the connection (no close frame sent)

@@ -91,9 +91,27 @@ public interface Session extends Closeable
      * @see #close()
      * @see #close(CloseStatus)
      * @see #close(int, String)
-     * @see #disconnect()
+     * @see #abort()
+     * @deprecated will be removed in Jetty 10.x - use {@link #abort()} instead
      */
-    void disconnect() throws IOException;
+    @Deprecated
+    default void disconnect() throws IOException { abort(); }
+
+    /**
+     * Issue a harsh abort of the underlying connection.
+     * <p>
+     * This will terminate the connection, without sending a websocket close frame.
+     * <p>
+     * Once called, any read/write activity on the websocket from this point will be indeterminate.
+     * <p>
+     * Once the underlying connection has been determined to be closed, the various onClose() events (either
+     * {@link WebSocketListener#onWebSocketClose(int, String)} or {@link OnWebSocketClose}) will be called on your
+     * websocket.
+     *
+     * @throws IOException
+     *             if unable to abort
+     */
+    void abort() throws IOException;
 
     /**
      * Return the number of milliseconds before this conversation will be closed by the container if it is inactive, ie no messages are either sent or received
@@ -110,7 +128,17 @@ public interface Session extends Closeable
      * @deprecated will be removed in Jetty 10.x - use {@link #getRemoteSocketAddress()} instead
      */
     @Deprecated
-    InetSocketAddress getLocalAddress();
+    default InetSocketAddress getLocalAddress()
+    {
+        if (getLocalSocketAddress() instanceof InetSocketAddress)
+        {
+            return (InetSocketAddress) getLocalSocketAddress();
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     /**
      * Get the address of the local side.
@@ -153,7 +181,17 @@ public interface Session extends Closeable
      * @deprecated will be removed in Jetty 10.x - use {@link #getRemoteSocketAddress()} instead
      */
     @Deprecated
-    InetSocketAddress getRemoteAddress();
+    default InetSocketAddress getRemoteAddress()
+    {
+        if (getRemoteSocketAddress() instanceof InetSocketAddress)
+        {
+            return (InetSocketAddress) getRemoteSocketAddress();
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     /**
      * Get the address of the remote side.

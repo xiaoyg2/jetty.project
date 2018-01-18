@@ -20,6 +20,7 @@ package org.eclipse.jetty.cdi.websocket.wsscope;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 
 import org.eclipse.jetty.websocket.api.CloseStatus;
 import org.eclipse.jetty.websocket.api.RemoteEndpoint;
@@ -58,6 +59,11 @@ public class BogusSession implements Session
     }
 
     @Override
+    public void abort() throws IOException
+    {
+    }
+
+    @Override
     public void close()
     {
     }
@@ -73,8 +79,10 @@ public class BogusSession implements Session
     }
 
     @Override
+    @Deprecated
     public void disconnect() throws IOException
     {
+        abort();
     }
 
     @Override
@@ -84,7 +92,14 @@ public class BogusSession implements Session
     }
 
     @Override
+    @Deprecated
     public InetSocketAddress getLocalAddress()
+    {
+        return null;
+    }
+
+    @Override
+    public SocketAddress getLocalSocketAddress()
     {
         return null;
     }
@@ -108,7 +123,14 @@ public class BogusSession implements Session
     }
 
     @Override
+    @Deprecated
     public InetSocketAddress getRemoteAddress()
+    {
+        return null;
+    }
+
+    @Override
+    public SocketAddress getRemoteSocketAddress()
     {
         return null;
     }

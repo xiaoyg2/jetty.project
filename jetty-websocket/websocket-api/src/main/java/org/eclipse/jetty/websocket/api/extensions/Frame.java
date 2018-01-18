@@ -103,10 +103,13 @@ public interface Frame
      * Same as {@link #isFin()}
      * 
      * @return true if final frame.
-     * @deprecated use {@link #isFin()} instead
+     * @deprecated Will be removed in Jetty 10.x - use {@link #isFin()} instead
      */
     @Deprecated
-    public boolean isLast();
+    default boolean isLast()
+    {
+        return isFin();
+    }
 
     public boolean isMasked();
 

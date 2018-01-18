@@ -20,7 +20,6 @@ package org.eclipse.jetty.websocket.common.util;
 
 import java.nio.ByteBuffer;
 
-import org.eclipse.jetty.util.Utf8Appendable;
 import org.eclipse.jetty.util.Utf8StringBuilder;
 
 /**
@@ -29,6 +28,7 @@ import org.eclipse.jetty.util.Utf8StringBuilder;
  * <p>
  * A call to {@link #toPartialString(ByteBuffer)} will return the section of the String from the start to the last
  * completed UTF8 sequence. Leaving incomplete sequences for a subsequent call to complete.
+ * @deprecated Will be removed in Jetty 10.x - use {@link Utf8StringBuilder} instead.
  */
 @Deprecated
 public class Utf8PartialBuilder
@@ -39,6 +39,10 @@ public class Utf8PartialBuilder
     {
     }
 
+    /**
+     * @deprecated Will be removed in Jetty 10.x - use {@link Utf8StringBuilder#takePartialString()} instead
+     */
+    @Deprecated
     public String toPartialString(ByteBuffer buf)
     {
         if (buf == null)

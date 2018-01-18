@@ -200,16 +200,23 @@ public abstract class AbstractWebSocketConnection extends AbstractConnection imp
     }
 
     @Override
-    public void disconnect()
+    public void abort()
     {
         if (LOG.isDebugEnabled())
-            LOG.debug("{} disconnect()",policy.getBehavior());
-        flusher.terminate(new EOFException("Disconnected"), false);
+            LOG.debug("{} abort()",policy.getBehavior());
+        flusher.terminate(new EOFException("Aborted"), false);
         EndPoint endPoint = getEndPoint();
         // We need to gently close first, to allow
         // SSL close alerts to be sent by Jetty
         endPoint.shutdownOutput();
         endPoint.close();
+    }
+
+    @Override
+    @Deprecated
+    public void disconnect()
+    {
+        abort();
     }
 
     @Override

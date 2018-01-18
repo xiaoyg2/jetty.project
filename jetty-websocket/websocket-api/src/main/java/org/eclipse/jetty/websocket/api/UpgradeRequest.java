@@ -53,7 +53,7 @@ public interface UpgradeRequest
 
     /**
      * Remove all headers from request.
-     * @deprecated (no longer supported, as this can undo the required upgrade request headers)
+     * @deprecated Will be removed in Jetty 10.x - (no longer supported, as this can undo the required upgrade request headers)
      */
     @Deprecated
     void clearHeaders();

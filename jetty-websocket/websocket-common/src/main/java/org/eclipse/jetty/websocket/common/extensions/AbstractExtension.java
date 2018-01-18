@@ -74,7 +74,10 @@ public abstract class AbstractExtension extends AbstractLifeCycle implements Dum
         out.append(heading).append(" : ");
         out.append(bean.toString());
     }
-    
+
+    /**
+     * @deprecated Will be removed in Jetty 10.x - use {@link #init(WebSocketPolicy, ByteBufferPool)} instead
+     */
     @Deprecated
     public void init(WebSocketContainerScope container)
     {

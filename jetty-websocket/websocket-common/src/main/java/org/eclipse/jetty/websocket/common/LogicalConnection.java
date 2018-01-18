@@ -38,8 +38,15 @@ public interface LogicalConnection extends OutgoingFrames, SuspendToken
 
     /**
      * Terminate the connection (no close frame sent)
+     * @deprecated use {@link #abort()} instead
      */
+    @Deprecated
     void disconnect();
+
+    /**
+     * Terminate the connection (no close frame sent)
+     */
+    void abort();
 
     /**
      * Get the ByteBufferPool in use by the connection

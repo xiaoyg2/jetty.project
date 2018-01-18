@@ -19,7 +19,6 @@
 package org.eclipse.jetty.websocket.common;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.net.URI;
 import java.util.HashMap;
@@ -115,18 +114,18 @@ public class WebSocketSession extends ContainerLifeCycle implements Session, Rem
         }
     }
 
-    public class DisconnectCallback implements Callback
+    public class AbortCallback implements Callback
     {
         @Override
         public void failed(Throwable x)
         {
-            disconnect();
+            abort();
         }
 
         @Override
         public void succeeded()
         {
-            disconnect();
+            abort();
         }
     }
 
@@ -179,7 +178,7 @@ public class WebSocketSession extends ContainerLifeCycle implements Session, Rem
      */
     public void abort(int statusCode, String reason)
     {
-        close(new CloseInfo(statusCode, reason), new DisconnectCallback());
+        close(new CloseInfo(statusCode, reason), new AbortCallback());
     }
 
     @Override
@@ -224,15 +223,14 @@ public class WebSocketSession extends ContainerLifeCycle implements Session, Rem
     }
 
     /**
-     * Harsh disconnect
+     * Harsh Abort
      */
-    @Override
-    public void disconnect()
+    public void abort()
     {
-        connection.disconnect();
+        connection.abort();
 
         // notify of harsh disconnect
-        notifyClose(StatusCode.NO_CLOSE,"Harsh disconnect");
+        notifyClose(StatusCode.NO_CLOSE,"Harsh abort");
     }
 
     public void dispatch(Runnable runnable)
@@ -372,13 +370,6 @@ public class WebSocketSession extends ContainerLifeCycle implements Session, Rem
     }
 
     @Override
-    @Deprecated
-    public InetSocketAddress getLocalAddress()
-    {
-        return connection.getLocalAddress();
-    }
-
-    @Override
     public SocketAddress getLocalSocketAddress()
     {
         return connection.getLocalAddress();
@@ -415,13 +406,6 @@ public class WebSocketSession extends ContainerLifeCycle implements Session, Rem
         }
 
         throw new WebSocketException("RemoteEndpoint unavailable, current state [" + state + "], expecting [OPEN or CONNECTED]");
-    }
-
-    @Override
-    @Deprecated
-    public InetSocketAddress getRemoteAddress()
-    {
-        return connection.getRemoteAddress();
     }
 
     @Override
@@ -683,6 +667,9 @@ public class WebSocketSession extends ContainerLifeCycle implements Session, Rem
         this.outgoingHandler = outgoing;
     }
 
+    /**
+     * @deprecated Will be removed in Jetty 10.x - no replacement. This implementation does nothing.
+     */
     @Deprecated
     public void setPolicy(WebSocketPolicy policy)
     {

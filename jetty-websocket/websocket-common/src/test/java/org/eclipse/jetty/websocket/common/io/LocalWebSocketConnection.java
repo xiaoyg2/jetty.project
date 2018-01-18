@@ -91,10 +91,17 @@ public class LocalWebSocketConnection implements LogicalConnection, IncomingFram
     }
 
     @Override
-    public void disconnect()
+    public void abort()
     {
         if (LOG.isDebugEnabled())
-            LOG.debug("disconnect()");
+            LOG.debug("abort()");
+    }
+
+    @Override
+    @Deprecated
+    public void disconnect()
+    {
+        abort();
     }
 
     @Override

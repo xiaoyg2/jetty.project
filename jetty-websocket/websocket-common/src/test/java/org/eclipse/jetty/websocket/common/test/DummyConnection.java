@@ -56,7 +56,7 @@ public class DummyConnection implements LogicalConnection
     }
 
     @Override
-    public void disconnect()
+    public void abort()
     {
     }
 

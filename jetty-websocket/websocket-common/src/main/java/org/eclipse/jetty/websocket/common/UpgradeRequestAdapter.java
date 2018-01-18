@@ -79,7 +79,7 @@ public class UpgradeRequestAdapter implements UpgradeRequest
     @Override
     public void clearHeaders()
     {
-        throw new UnsupportedOperationException("Clear of Headers is unsupported");
+        headers.clear();
     }
 
     @Override

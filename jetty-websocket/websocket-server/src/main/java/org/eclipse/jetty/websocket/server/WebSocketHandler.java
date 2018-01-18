@@ -32,6 +32,10 @@ import org.eclipse.jetty.websocket.api.WebSocketBehavior;
 import org.eclipse.jetty.websocket.api.WebSocketPolicy;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 
+/**
+ * @deprecated Will be removed in Jetty 10.x - no replacement using WebSocketServletFactory (Jetty Native API or JSR356) will be provided. Alternate API might exist.
+ */
+@Deprecated
 public abstract class WebSocketHandler extends HandlerWrapper
 {
     /**

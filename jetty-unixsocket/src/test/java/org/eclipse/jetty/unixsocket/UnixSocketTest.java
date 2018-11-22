@@ -144,6 +144,7 @@ public class UnixSocketTest
         log.debug( "response from server: {}", contentResponse.getContentAsString() );
 
         assertThat(contentResponse.getContentAsString(), containsString( "Hello World" ));
+        log.info( "UnixSocketTest: complete" );
     }
 
     @Test

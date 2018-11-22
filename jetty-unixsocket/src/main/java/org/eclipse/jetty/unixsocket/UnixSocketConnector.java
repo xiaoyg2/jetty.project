@@ -169,6 +169,32 @@ public class UnixSocketConnector extends AbstractConnector
     }
 
     /** Generic Server Connection.
+     * @param server
+     *          The server this connector will be accept connection for.
+     * @param executor
+     *          An executor used to run tasks for handling requests, acceptors and selectors.
+     *          If null then use the servers executor
+     * @param scheduler
+     *          A scheduler used to schedule timeouts. If null then use the servers scheduler
+     * @param bufferPool
+     *          A ByteBuffer pool used to allocate buffers.  If null then create a private pool with default configuration.
+     * @param selectors
+     *          the number of selector threads, or &lt;=0 for a default value(1). Selectors notice and schedule established connection that can make IO progress.
+     * @param factories
+     *          Zero or more {@link ConnectionFactory} instances used to create and configure connections.
+     */
+    public UnixSocketConnector(
+            @Name("server") Server server,
+            @Name("executor") Executor executor,
+            @Name("scheduler") Scheduler scheduler,
+            @Name("bufferPool") ByteBufferPool bufferPool,
+            @Name("selectors") int selectors,
+            @Name("factories") ConnectionFactory... factories)
+    {
+        this(server, executor, scheduler, bufferPool, 0, selectors, factories);
+    }
+
+    /** Generic Server Connection.
      * @param server    
      *          The server this connector will be accept connection for.  
      * @param executor  
@@ -178,6 +204,8 @@ public class UnixSocketConnector extends AbstractConnector
      *          A scheduler used to schedule timeouts. If null then use the servers scheduler
      * @param bufferPool
      *          A ByteBuffer pool used to allocate buffers.  If null then create a private pool with default configuration.
+     * @param acceptors
+     *          the number of acceptor threads, or &lt;=0 for a default value(1). Acceptors accept new connections.  If there are no acceptors, then accepting is done asynchronously by the selector.
      * @param selectors
      *          the number of selector threads, or &lt;=0 for a default value(1). Selectors notice and schedule established connection that can make IO progress.
      * @param factories 
@@ -188,14 +216,14 @@ public class UnixSocketConnector extends AbstractConnector
         @Name("executor") Executor executor,
         @Name("scheduler") Scheduler scheduler,
         @Name("bufferPool") ByteBufferPool bufferPool,
+        @Name("acceptors") int acceptors,
         @Name("selectors") int selectors,
         @Name("factories") ConnectionFactory... factories)
     {
-        super(server,executor,scheduler,bufferPool,0,factories);
+        super(server,executor,scheduler,bufferPool,acceptors,factories);
         _manager = newSelectorManager(getExecutor(), getScheduler(),
             selectors>0?selectors:1);
         addBean(_manager, true);
-        setAcceptorPriorityDelta(-2);
     }
 
     @ManagedAttribute
@@ -307,7 +335,7 @@ public class UnixSocketConnector extends AbstractConnector
     @Override
     public void accept(int acceptorID) throws IOException
     {
-        LOG.debug("Blocking UnixSocket accept used.  Might not be able to be interrupted!");
+        LOG.warn("Blocking UnixSocket accept used.  Might not be able to be interrupted!");
         UnixServerSocketChannel serverChannel = _acceptChannel;
         if (serverChannel != null && serverChannel.isOpen())
         {

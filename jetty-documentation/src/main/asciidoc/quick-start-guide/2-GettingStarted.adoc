@@ -370,6 +370,8 @@ You can configure the SSL connector to run on a different port by setting the `j
 Alternatively, property values can be added to the effective command line built from the `start.ini` file or `start.d/*.ini` files, depending on your set up.
 Please see the section on link:#start-vs-startd[Start.ini vs. Start.d] for more information.
 
+[[qsg-additional-startjar]]
+
 === More start.jar Options
 
 The job of the `start.jar` is to interpret the command line, `start.ini` and `start.d` directory (and associated .ini files) to build a Java classpath and list of properties and configuration files to pass to the main class of the Jetty XML configuration mechanism.
@@ -398,6 +400,8 @@ The configuration itself must set the context path.
 If `example.xml` and `example.war` exists, only the XML is deployed (which may use the WAR in its configuration).
 
 If you have a standard web application, you can hot deploy it into Jetty by copying it into the `webapps` directory.
+
+[[qsg-distribution-web-apps]]
 
 === Jetty Demonstration Web Applications
 

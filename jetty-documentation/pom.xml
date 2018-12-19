@@ -139,7 +139,7 @@
             <configuration>
               <backend>html5</backend>
               <templateDir>${web.resources.directory}/asciidoc/template</templateDir>
-              <sourceDirectory>${basedir}/src/main/asciidoc/quick-start</sourceDirectory>
+              <sourceDirectory>${basedir}/src/main/asciidoc/quick-start-guide</sourceDirectory>
               <sourceDocumentName>index.adoc</sourceDocumentName>
               <outputDirectory>${project.build.directory}/html/quickstart-guide</outputDirectory>
             </configuration>

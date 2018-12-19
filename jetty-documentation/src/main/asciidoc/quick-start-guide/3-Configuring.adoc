@@ -17,13 +17,15 @@
 //
 
 [[quickstart-config-how]]
-=== How to Configure Jetty
+== How to Configure Jetty
 
 To understand Jetty configuration, you need to understand the "How" and the "What".
 This section covers how to configure Jetty in terms of what mechanisms exist to perform configuration.
-The link:#quickstart-config-what[next section] gives an overview of the action components and fields that you can configure with these mechanisms.
+The next section gives an overview of the action components and fields that you can configure with these mechanisms.
 
-==== Jetty POJO Configuration
+[[qsg-jetty-pojo]]
+
+=== Jetty POJO Configuration
 
 The core components of Jetty are Plain Old Java Objects (http://en.wikipedia.org/wiki/Plain_Old_Java_Object[POJOs])
 The process of configuring Jetty is mostly the process of instantiating, assembling and setting fields on the Jetty POJOs.
@@ -37,7 +39,9 @@ The `etc/jetty.xml` file is the main Jetty XML configuration file, but there are
 
 Because the main Jetty configuration is done by IoC, the link:{JDURL}/[Jetty API documentation] is the ultimate configuration reference.
 
-==== Jetty Start Configuration Files
+[[qsg-jetty-config-files]]
+
+=== Jetty Start Configuration Files
 
 The Jetty distribution uses the following configuration files to instantiate, inject and start server via the `start.jar` mechanism.
 
@@ -286,7 +290,9 @@ If you do for some reason feel you want to change the way an XML file operates, 
 Jetty will always look first to the `$JETTY_BASE` for configuration.
 ____
 
-==== Other Configuration Files
+[[qsg-other-config-files]]
+
+=== Other Configuration Files
 
 In addition to the configuration files described above, the configuration of the server can use the following file types:
 

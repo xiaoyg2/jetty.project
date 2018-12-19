@@ -130,6 +130,20 @@
             </configuration>
           </execution>
           -->
+         <execution>
+            <id>quickstart-guide</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>process-asciidoc</goal>
+            </goals>
+            <configuration>
+              <backend>html5</backend>
+              <templateDir>${web.resources.directory}/asciidoc/template</templateDir>
+              <sourceDirectory>${basedir}/src/main/asciidoc/quick-start</sourceDirectory>
+              <sourceDocumentName>index.adoc</sourceDocumentName>
+              <outputDirectory>${project.build.directory}/html/quickstart-guide</outputDirectory>
+            </configuration>
+          </execution>
           <execution>
             <id>contribution-guide</id>
             <phase>generate-resources</phase>

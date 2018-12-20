@@ -53,5 +53,7 @@ endif::[]
 // suppress automatic id generation
 :sectids!:
 
-include::1-Startup.adoc[]
-include::2-Sessions.adoc[]
+include::1-startup.adoc[]
+include::2-sessions.adoc[]
+include::3-logging.adoc[]
+include::4-jndi.adoc[]

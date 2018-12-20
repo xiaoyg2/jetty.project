@@ -53,6 +53,6 @@ endif::[]
 // suppress automatic id generation
 :sectids!:
 
-include::1-Introduction.adoc[]
-include::2-GettingStarted.adoc[]
-include::3-Configuring.adoc[]
+include::1-introduction.adoc[]
+include::2-gettingstarted.adoc[]
+include::3-configuring.adoc[]

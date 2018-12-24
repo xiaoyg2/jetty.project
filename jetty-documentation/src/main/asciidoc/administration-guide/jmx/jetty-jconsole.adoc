@@ -109,7 +109,7 @@ From this window you can monitor memory usage, thread usage, classloading and VM
 You can also perform operations such as a manual garbage collect.
 JMC is an extremely powerful and useful tool.
 
-==== Managing Jetty Objects with JConsole
+==== Managing Jetty Objects with JMC
 
 The MBean tab of JMC allows access to managed objects within the Java application, including MBeans the JVM provides.
 If you also want to interact with the Jetty JMX implementation via JMC, you need to start Jetty JMX in a form that JMC can access.

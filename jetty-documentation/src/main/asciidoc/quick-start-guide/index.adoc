@@ -57,6 +57,12 @@ endif::[]
 // suppress automatic id generation
 :sectids!:
 
+<<<<<<< HEAD
 include::1-Introduction.adoc[]
 include::2-GettingStarted.adoc[]
 include::3-Configuring.adoc[]
+=======
+include::1-introduction.adoc[]
+include::2-gettingstarted.adoc[]
+include::3-configuring.adoc[]
+>>>>>>> 2fa091e210ef30c8f1e4e4cd99a60b90a1089981

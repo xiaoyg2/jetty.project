@@ -23,6 +23,9 @@
 :revdate: {TIMESTAMP}
 :toc: left
 :toc-title: Quickstart Guide
+:toc-image: jetty-logo.svg
+:toc-image-url: /jetty/index.html
+
 :imagesdir: ../common/images
 
 // docinfo lets you pull in shared content and/or influence via render type
@@ -43,6 +46,7 @@ endif::[]
 
 // suppress document footer generation
 //:nofooter:
+:no-eclipse-footer:
 
 // uncomment to allow include::https:// style content inclusion
 //:allow-uri-read: true

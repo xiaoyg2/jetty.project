@@ -141,7 +141,6 @@ public class CyclicTimeoutTest
     }
 
     @Test
-    @Disabled
     public void testBusy() throws Exception
     {
         QueuedThreadPool pool = new QueuedThreadPool(200);

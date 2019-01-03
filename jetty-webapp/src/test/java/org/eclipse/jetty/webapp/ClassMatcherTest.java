@@ -117,7 +117,6 @@ public class ClassMatcherTest
 
     @SuppressWarnings("restriction")
     @Test
-    @DisabledOnJre(JRE.JAVA_8)
     public void testIncludedLocations() throws Exception
     {
         // jar from JVM classloader
@@ -156,7 +155,6 @@ public class ClassMatcherTest
 
     @SuppressWarnings("restriction")
     @Test
-    @DisabledOnJre(JRE.JAVA_8)
     public void testIncludedLocationsOrModule() throws Exception
     {
         // jar from JVM classloader
@@ -232,7 +230,6 @@ public class ClassMatcherTest
 
     @SuppressWarnings("restriction")
     @Test
-    @DisabledOnJre(JRE.JAVA_8)
     public void testExcludeLocationsOrModule() throws Exception
     {
         // jar from JVM classloader

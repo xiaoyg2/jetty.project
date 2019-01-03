@@ -1695,7 +1695,6 @@ public abstract class HttpServerTestBase extends HttpServerTestFixture
     }
 
     @Test
-    @DisabledOnJre({JRE.JAVA_8, JRE.JAVA_9, JRE.JAVA_10})
     public void testShutdown() throws Exception
     {
         configureServer(new ReadExactHandler());
@@ -1736,7 +1735,6 @@ public abstract class HttpServerTestBase extends HttpServerTestFixture
     }
 
     @Test
-    @DisabledOnJre({JRE.JAVA_8, JRE.JAVA_9, JRE.JAVA_10})
     public void testChunkedShutdown() throws Exception
     {
         configureServer(new ReadExactHandler(4096));

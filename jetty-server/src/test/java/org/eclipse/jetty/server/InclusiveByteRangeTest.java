@@ -279,7 +279,6 @@ public class InclusiveByteRangeTest
     }
 
     @Test
-    @Disabled
     public void testBadRange_SetPartiallyBad()
     {
         assertBadRangeList(500, "bytes=1-50,1-b,a-50");
@@ -298,7 +297,6 @@ public class InclusiveByteRangeTest
     }
 
     @Test
-    @Disabled
     public void testBadRange_ZeroPrefixed()
     {
         assertBadRangeList(500, "bytes=01-050");
@@ -311,7 +309,6 @@ public class InclusiveByteRangeTest
     }
 
     @Test
-    @Disabled
     public void testBadRange_TabWhitespace()
     {
         assertBadRangeList(500, "bytes=\t1\t-\t50");

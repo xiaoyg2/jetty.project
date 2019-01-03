@@ -124,7 +124,6 @@ public class MultiReleaseJarFileTest
     
     
     @Test
-    @DisabledOnJre(JRE.JAVA_8)
     public void testClassLoaderJava9() throws Exception
     {
         try(URLClassLoader loader = new URLClassLoader(new URL[]{example.toURI().toURL()}))

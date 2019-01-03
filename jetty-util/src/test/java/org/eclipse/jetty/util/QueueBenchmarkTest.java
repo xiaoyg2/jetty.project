@@ -38,6 +38,7 @@ import org.junit.jupiter.api.Test;
 // TODO: Review - this is a HIGH_CPU, HIGH_MEMORY test that takes 20 minutes to execute.
 // perhaps this should not be a normal every day testcase?
 // Move to a different module? make it not a junit testcase?
+// move to jmh?
 @Disabled
 public class QueueBenchmarkTest
 {

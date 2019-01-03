@@ -42,7 +42,9 @@ import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.junit.jupiter.api.Disabled;
 
-@Disabled("Not a test case")
+/**
+ * manual testing
+ */
 public class TestTransparentProxyServer
 {
     public static void main(String[] args) throws Exception

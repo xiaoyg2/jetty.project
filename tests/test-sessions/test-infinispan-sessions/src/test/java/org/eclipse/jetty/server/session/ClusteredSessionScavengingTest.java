@@ -24,7 +24,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 
-@Disabled("Disabled due to Infinispan not supporting JDK 11, see eclipse/jetty.project#3024")
 public class ClusteredSessionScavengingTest extends AbstractClusteredSessionScavengingTest
 {
     public InfinispanTestSupport _testSupport;

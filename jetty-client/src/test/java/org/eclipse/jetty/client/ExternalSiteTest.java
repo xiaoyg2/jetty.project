@@ -33,10 +33,8 @@ import org.eclipse.jetty.http.HttpScheme;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled
 public class ExternalSiteTest
 {
     private HttpClient client;

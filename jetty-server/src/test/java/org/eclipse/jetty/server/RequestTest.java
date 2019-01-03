@@ -1104,7 +1104,6 @@ public class RequestTest
     }
 
     @Test
-    @Disabled("See issue #1175")
     public void testMultiPartFormDataReadInputThenParams() throws Exception
     {
         final File tmpdir = MavenTestingUtils.getTargetTestingDir("multipart");
@@ -1617,7 +1616,7 @@ public class RequestTest
         
     }
 
-    @Disabled("No longer relevant")
+    //@Disabled("No longer relevant")
     @Test
     public void testCookieLeak() throws Exception
     {

@@ -222,7 +222,6 @@ public class ReservedThreadExecutorTest
         }
     }
 
-    @Disabled
     @Test
     public void stressTest() throws Exception
     {

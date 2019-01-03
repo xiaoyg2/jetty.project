@@ -40,7 +40,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 // TODO: these tests seems to fail spuriously, figure out why.
-@Disabled
 @Tag("Unstable")
 public class HttpClientConnectTimeoutTest extends AbstractTest<TransportScenario>
 {

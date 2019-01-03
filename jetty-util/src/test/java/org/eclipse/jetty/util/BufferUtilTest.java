@@ -239,6 +239,7 @@ public class BufferUtilTest
     @Test
     @Disabled("Very simple microbenchmark to compare different writeTo implementations. Only for development thus " +
             "ignored.")
+    // olamy move to JMH?
     public void testWriteToMicrobenchmark() throws IOException
     {
         int capacity = 1024 * 128;

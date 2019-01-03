@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
  * Testing for LifeCycleListener events on nested components
  * during runtime.
  */
-@Disabled
 public class LifeCycleListenerNestedTest
 {
     // Set this true to use test-specific workaround.

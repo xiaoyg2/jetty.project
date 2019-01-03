@@ -27,9 +27,7 @@ import org.junit.jupiter.api.Disabled;
 
 /**
  * Perform the RFC2616 tests against a server running with the Jetty NIO Connector and listening on HTTPS (HTTP over SSL).
- * TODO
  */
-@Disabled("TODO")
 public class RFC2616NIOHttpsTest extends RFC2616BaseTest
 {
     @BeforeAll

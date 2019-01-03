@@ -50,6 +50,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledOnOs;
 
+// move to jmh?
 @Disabled
 @Tag("stress")
 @DisabledOnOs(MAC) // TODO: needs investigation

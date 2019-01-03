@@ -45,7 +45,6 @@ import org.junit.jupiter.api.Disabled;
 /**
  * Allows for setting up a Jetty server for testing based on XML configuration files.
  */
-@Disabled
 public class TestableJettyServer
 {
     private List<URL> _xmlConfigurations;

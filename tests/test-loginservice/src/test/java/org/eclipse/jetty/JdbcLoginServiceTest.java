@@ -176,8 +176,6 @@ public class JdbcLoginServiceTest
          }
      }
 
-     //Head requests to jetty-client are not working: see https://bugs.eclipse.org/bugs/show_bug.cgi?id=394552
-     @Disabled
      public void testHead() throws Exception
      {
          try

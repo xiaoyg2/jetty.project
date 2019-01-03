@@ -85,8 +85,7 @@ public class ValidUrlRuleTest extends AbstractRuleTestCase
         assertEquals(405,_response.getStatus());
         assertEquals("foo",_response.getReason());
     }
-    
-    @Disabled("Not working in jetty-9")
+
     @Test
     public void testInvalidShamrock() throws Exception
     {
@@ -100,7 +99,6 @@ public class ValidUrlRuleTest extends AbstractRuleTestCase
         assertEquals("foo",_response.getReason());
     }
 
-    @Disabled("Not working in jetty-9")
     @Test
     public void testValidShamrock() throws Exception
     {

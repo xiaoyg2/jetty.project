@@ -55,7 +55,6 @@ public class TestBadUseCases
     }
 
     // TODO unsure how this failure should be handled
-    @Disabled
     @ParameterizedTest
     @MethodSource("getCases")
     public void testBadConfig(String caseName, String expectedErrorMessage, String[] commandLineArgs) throws Exception

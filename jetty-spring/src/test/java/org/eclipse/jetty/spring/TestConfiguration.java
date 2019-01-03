@@ -20,9 +20,6 @@ package org.eclipse.jetty.spring;
 
 import java.net.URL;
 
-import org.junit.jupiter.api.Disabled;
-
-@Disabled
 public class TestConfiguration
 {
     public static int VALUE = 77;

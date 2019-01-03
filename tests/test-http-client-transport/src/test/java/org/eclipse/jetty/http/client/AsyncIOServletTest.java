@@ -395,7 +395,6 @@ public class AsyncIOServletTest extends AbstractTest<AsyncIOServletTest.AsyncTra
     @ParameterizedTest
     @ArgumentsSource(TransportProvider.class)
     @Tag("Unstable")
-    @Disabled // TODO fix this test! #2243
     public void testAsyncWriteClosed(Transport transport) throws Exception
     {
         // TODO work out why this test fails for UNIX_SOCKET

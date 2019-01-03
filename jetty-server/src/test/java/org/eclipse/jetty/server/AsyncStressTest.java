@@ -51,6 +51,7 @@ import org.junit.jupiter.api.Test;
 
 @Disabled
 @Tag("stress")
+// TODO move to jmh?
 public class AsyncStressTest
 {
     private static final Logger LOG = Log.getLogger(AsyncStressTest.class);

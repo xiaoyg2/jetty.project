@@ -86,7 +86,6 @@ public class SslUploadTest
     }
 
     @Test
-    @Disabled
     public void test() throws Exception
     {
         KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());

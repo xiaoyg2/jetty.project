@@ -298,7 +298,6 @@ public class SessionTest
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("data")
-    @Disabled
     public void testPathParams_Endpoint_Empty(Case testCase) throws Exception
     {
         setup(testCase);
@@ -308,7 +307,6 @@ public class SessionTest
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("data")
-    @Disabled
     public void testPathParams_Endpoint_Single(Case testCase) throws Exception
     {
         setup(testCase);
@@ -318,7 +316,6 @@ public class SessionTest
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("data")
-    @Disabled
     public void testPathParams_Endpoint_Double(Case testCase) throws Exception
     {
         setup(testCase);
@@ -328,7 +325,6 @@ public class SessionTest
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("data")
-    @Disabled
     public void testPathParams_Endpoint_Triple(Case testCase) throws Exception
     {
         setup(testCase);
@@ -368,7 +364,6 @@ public class SessionTest
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("data")
-    @Disabled
     public void testRequestUri_Endpoint_Basic(Case testCase) throws Exception
     {
         setup(testCase);
@@ -378,7 +373,6 @@ public class SessionTest
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("data")
-    @Disabled
     public void testRequestUri_Endpoint_WithPathParam(Case testCase) throws Exception
     {
         setup(testCase);
@@ -388,7 +382,6 @@ public class SessionTest
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("data")
-    @Disabled
     public void testRequestUri_Endpoint_WithPathParam_WithQuery(Case testCase) throws Exception
     {
         setup(testCase);

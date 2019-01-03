@@ -49,7 +49,6 @@ import org.junit.jupiter.api.Test;
  * This test class runs tests to make sure that hostname verification (http://www.ietf.org/rfc/rfc2818.txt
  * section 3.1) is configurable in SslContextFactory and works as expected.
  */
-@Disabled
 public class HostnameVerificationTest
 {
     private SslContextFactory clientSslContextFactory = new SslContextFactory();

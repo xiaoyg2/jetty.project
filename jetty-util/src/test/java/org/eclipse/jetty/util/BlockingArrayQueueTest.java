@@ -158,7 +158,7 @@ public class BlockingArrayQueueTest
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "env", matches = "ci") // TODO: SLOW, needs review
+    //@DisabledIfSystemProperty(named = "env", matches = "ci") // TODO: SLOW, needs review
     public void testTake() throws Exception
     {
         final String[] data=new String[4];
@@ -202,7 +202,7 @@ public class BlockingArrayQueueTest
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "env", matches = "ci") // TODO: SLOW, needs review
+    //@DisabledIfSystemProperty(named = "env", matches = "ci") // TODO: SLOW, needs review
     public void testConcurrentAccess() throws Exception
     {
         final int THREADS=50;

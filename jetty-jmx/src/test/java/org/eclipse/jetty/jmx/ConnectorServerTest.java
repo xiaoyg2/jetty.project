@@ -52,7 +52,6 @@ import org.junit.jupiter.api.Test;
  * Running each test method in a forked JVM makes these tests all pass,
  * therefore the issue is likely caused by use of stale stubs cached by the JDK.
  */
-@Disabled
 public class ConnectorServerTest
 {
     private String objectName = "org.eclipse.jetty:name=rmiconnectorserver";

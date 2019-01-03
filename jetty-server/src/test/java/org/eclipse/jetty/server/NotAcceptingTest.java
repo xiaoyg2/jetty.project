@@ -151,7 +151,6 @@ public class NotAcceptingTest
     
 
     @Test
-    @Disabled
     public void testLocalConnector() throws Exception
     {
         server.setHandler(new HelloHandler());

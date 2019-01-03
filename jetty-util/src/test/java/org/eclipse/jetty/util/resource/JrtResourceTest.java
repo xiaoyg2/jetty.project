@@ -36,10 +36,9 @@ import org.junit.jupiter.api.condition.JRE;
 
 public class JrtResourceTest
 {
-    private String testResURI = MavenTestingUtils.getTestResourcesDir().getAbsoluteFile().toURI().toASCIIString();
+    //private String testResURI = MavenTestingUtils.getTestResourcesDir().getAbsoluteFile().toURI().toASCIIString();
 
     @Test
-    @DisabledOnJre(JRE.JAVA_8)
     public void testResourceFromUriForString()
     throws Exception
     {
@@ -56,7 +55,6 @@ public class JrtResourceTest
     }
 
     @Test
-    @DisabledOnJre(JRE.JAVA_8)
     public void testResourceFromStringForString()
             throws Exception
     {
@@ -72,7 +70,6 @@ public class JrtResourceTest
     }
 
     @Test
-    @DisabledOnJre(JRE.JAVA_8)
     public void testResourceFromURLForString()
             throws Exception
     {
@@ -89,7 +86,6 @@ public class JrtResourceTest
 
 
     @Test
-    @DisabledOnJre(JRE.JAVA_8)
     public void testResourceModule()
             throws Exception
     {
@@ -101,7 +97,6 @@ public class JrtResourceTest
     }
 
     @Test
-    @DisabledOnJre(JRE.JAVA_8)
     public void testResourceAllModules()
             throws Exception
     {

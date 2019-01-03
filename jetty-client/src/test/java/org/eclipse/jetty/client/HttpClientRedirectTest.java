@@ -295,7 +295,6 @@ public class HttpClientRedirectTest extends AbstractHttpClientServerTest
 
     @ParameterizedTest
     @ArgumentsSource(ScenarioProvider.class)
-    @Disabled
     public void testRedirectFailed(Scenario scenario) throws Exception
     {
         // TODO this test is failing with timout after an ISP upgrade??  DNS dependent?

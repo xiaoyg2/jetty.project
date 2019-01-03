@@ -287,7 +287,6 @@ public abstract class ConnectorTimeoutTest extends HttpServerTestFixture
 
     @Test
     @Tag("Unstable")
-    @Disabled // TODO make more stable
     public void testNoBlockingTimeoutRead() throws Exception
     {
         _httpConfiguration.setBlockingTimeout(-1L);
@@ -349,7 +348,6 @@ public abstract class ConnectorTimeoutTest extends HttpServerTestFixture
     
     @Test
     @Tag("Unstable")
-    @Disabled // TODO make more stable
     public void testBlockingTimeoutRead() throws Exception
     {
         _httpConfiguration.setBlockingTimeout(750L);
@@ -415,7 +413,6 @@ public abstract class ConnectorTimeoutTest extends HttpServerTestFixture
 
     @Test
     @Tag("Unstable")
-    @Disabled // TODO make more stable
     public void testNoBlockingTimeoutWrite() throws Exception
     {
         configureServer(new HugeResponseHandler());
@@ -456,7 +453,6 @@ public abstract class ConnectorTimeoutTest extends HttpServerTestFixture
 
     @Test
     @Tag("Unstable")
-    @Disabled // TODO make more stable
     public void testBlockingTimeoutWrite() throws Exception
     {
         _httpConfiguration.setBlockingTimeout(750L);

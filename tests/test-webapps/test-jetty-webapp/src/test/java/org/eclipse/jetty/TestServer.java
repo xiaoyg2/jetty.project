@@ -57,7 +57,9 @@ import org.eclipse.jetty.webapp.MetaInfConfiguration;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.junit.jupiter.api.Disabled;
 
-@Disabled("Not a test case")
+/**
+ * Manual testing
+ */
 public class TestServer
 {
     private static final Logger LOG = Log.getLogger(TestServer.class);

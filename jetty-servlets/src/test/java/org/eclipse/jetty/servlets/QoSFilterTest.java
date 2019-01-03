@@ -105,7 +105,7 @@ public class QoSFilterTest
             assertThat(TestServlet.__maxSleepers, Matchers.lessThanOrEqualTo(NUM_CONNECTIONS));
     }
 
-    @Disabled("Issue #2627")
+    //@Disabled("Issue #2627")
     @Test
     public void testBlockingQosFilter() throws Exception
     {

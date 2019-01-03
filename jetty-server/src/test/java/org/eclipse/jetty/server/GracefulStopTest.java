@@ -394,7 +394,6 @@ public class GracefulStopTest
      * @throws Exception on test failure
      */
     @Test
-    @Disabled // TODO disable while #2046 is fixed
     public void testSlowCloseTinyGraceful() throws Exception
     {
         Log.getLogger(QueuedThreadPool.class).info("Expect some threads can't be stopped");
@@ -406,7 +405,6 @@ public class GracefulStopTest
      * @throws Exception on test failure
      */
     @Test
-    @Disabled // TODO disable while #2046 is fixed
     public void testSlowCloseGraceful() throws Exception
     {
         testSlowClose(5000,1000,Matchers.allOf(greaterThan(750L),lessThan(4999L)));

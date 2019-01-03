@@ -135,7 +135,6 @@ public class TypeUtilTest
     }
     
     @Test
-    @Disabled // TODO fails if the mavenRepo is a symbolic link
     public void testGetLocationOfClass() throws Exception
     {
         String mavenRepoPathProperty = System.getProperty( "mavenRepoPath");
@@ -153,20 +152,10 @@ public class TypeUtilTest
     }
 
     @Test
-    @DisabledOnJre(JRE.JAVA_8)
     public void testGetLocation_JvmCore_JPMS()
     {
         // Class from JVM core
         String expectedJavaBase = "/java.base/";
-        assertThat(TypeUtil.getLocationOfClass(String.class).toASCIIString(),containsString(expectedJavaBase));
-    }
-
-    @Test
-    @EnabledOnJre(JRE.JAVA_8)
-    public void testGetLocation_JvmCore_Java8RT()
-    {
-        // Class from JVM core
-        String expectedJavaBase = "/rt.jar";
         assertThat(TypeUtil.getLocationOfClass(String.class).toASCIIString(),containsString(expectedJavaBase));
     }
 }

@@ -38,7 +38,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled("Unfixed range bug - Issue #107")
 public class ResourceHandlerRangeTest
 {
     private static Server server;

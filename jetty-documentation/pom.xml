@@ -172,6 +172,20 @@
               <outputDirectory>${project.build.directory}/html/contribution-guide</outputDirectory>
             </configuration>
           </execution>
+          <execution>
+            <id>development-guide</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>process-asciidoc</goal>
+            </goals>
+            <configuration>
+              <backend>html5</backend>
+              <templateDir>${web.resources.directory}/asciidoc/template</templateDir>
+              <sourceDirectory>${basedir}/src/main/asciidoc/development</sourceDirectory>
+              <sourceDocumentName>index.adoc</sourceDocumentName>
+              <outputDirectory>${project.build.directory}/html/development</outputDirectory>
+            </configuration>
+          </execution>
           <!--
           <execution>
             <id>developer-guide</id>

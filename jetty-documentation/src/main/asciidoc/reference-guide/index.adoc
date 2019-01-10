@@ -16,13 +16,13 @@
 //  ========================================================================
 //
 
-:doctitle: Eclipse Jetty: Quickstart Guide
+:doctitle: Eclipse Jetty: Reference Guide
 :author: Jetty Developers
 :email: jetty-dev@eclipse.org
 :revnumber: 1.0
 :revdate: {TIMESTAMP}
 :toc: left
-:toc-title: Quickstart Guide
+:toc-title: Reference Guide
 :toc-image: jetty-logo.svg
 :toc-image-url: /jetty/index.html
 
@@ -48,6 +48,7 @@ endif::[]
 //:nofooter:
 :no-eclipse-footer:
 
+
 // uncomment to allow include::https:// style content inclusion
 //:allow-uri-read: true
 
@@ -57,6 +58,10 @@ endif::[]
 // suppress automatic id generation
 :sectids!:
 
-include::introduction/chapter.adoc[]
-include::getting-started/chapter.adoc[]
-include::configuring/chapter.adoc[]
+include::architecture/chapter.adoc[]
+include::platforms/chapter.adoc[]
+include::jetty-xml/chapter.adoc[]
+include::troubleshooting/chapter.adoc[]
+include::debugging/chapter.adoc[]
+include::contributing/chapter.adoc[]
+include::upgrading/chapter.adoc[]

@@ -1,6 +1,6 @@
 //
 //  ========================================================================
-//  Copyright (c) 1995-2018 Mort Bay Consulting Pty. Ltd.
+//  Copyright (c) 1995-2019 Mort Bay Consulting Pty. Ltd.
 //  ========================================================================
 //  All rights reserved. This program and the accompanying materials
 //  are made available under the terms of the Eclipse Public License v1.0
@@ -16,17 +16,13 @@
 //  ========================================================================
 //
 
-[[jetty-dev-guide]]
+[[quick-start-getting-started]]
+== Using Jetty
 
-= Jetty Development Guide
+You can use Jetty in many different ways ranging from embedding Jetty in applications, launching it from different build systems, from different JVM-based languages, or as a standalone distribution.
+This guide covers the latter, a standalone distribution suitable for deploying web applications.
 
-include::embedding/chapter.adoc[]
-include::clients/http/chapter.adoc[]
-include::maven/chapter.adoc[]
-include::ant/chapter.adoc[]
-include::handlers/chapter.adoc[]
-include::websockets/intro/chapter.adoc[]
-include::websockets/jetty/chapter.adoc[]
-//include::websockets/java/chapter.adoc[]
-include::continuations/chapter.adoc[]
-include::frameworks/chapter.adoc[]
+include::jetty-installing.adoc[]
+include::jetty-running.adoc[]
+include::jetty-common-configuration.adoc[]
+include::jetty-deploying.adoc[]

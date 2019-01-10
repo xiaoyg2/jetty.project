@@ -1,6 +1,6 @@
 //
 //  ========================================================================
-//  Copyright (c) 1995-2018 Mort Bay Consulting Pty. Ltd.
+//  Copyright (c) 1995-2019 Mort Bay Consulting Pty. Ltd.
 //  ========================================================================
 //  All rights reserved. This program and the accompanying materials
 //  are made available under the terms of the Eclipse Public License v1.0
@@ -15,66 +15,6 @@
 //  You may elect to redistribute this code under either of these licenses.
 //  ========================================================================
 //
-
-[[what-is-jetty]]
-== What is Jetty?
-
-Jetty is an open-source project providing an HTTP server, HTTP client, and javax.servlet container.
-
-This guide is broken up in to five parts:
-
-* The link:#quick-start[first section] emphasizes beginning to use Jetty.
-It provides information about what Jetty is and where you can download it, and where to find Jetty in repositories like Central Maven.
-It also provides a Quick Start guide on how to get Jetty up and running as well as an overview of how and what to configure in Jetty.
-
-* The link:#jetty-config-guide[second section] of the guide deals with configuring Jetty at a more granular level.
-It explains how to use Jetty to deploy web applications, configure contexts and connects, and how to implement SSL and other security measures.
-
-* Administration of Jetty is the focus of the link:#jetty-admin-guide[third section] of the guide.
-From server startup to session management, logging, HTTP/2 support and Jetty optimization, these chapters will help administrators get the most out of their Jetty server instances.
-This section also covers configuring many of the most common servlet container features such as JNDI and JMX.
-
-* Aimed at advanced users of Jetty, the link:#jetty-dev-guide[fourth section] of the guide focuses on Jetty development.
-A large portion of this section is focused on using Jetty as an embedded server in existing applications.
-It contains several examples and how-to guides for making the most out of the Jetty framework.
-This section also includes a guide on using the Jetty Maven plugin as well as information on debugging Jetty.
-
-* The link:#jetty-ref-guide[final section] of the guide is a reference section.
-Included there are guides on Jetty architecture and Jetty XML syntax, alternate distributions of Jetty and even troubleshooting of common issues.
-There is also a chapter on getting involved in the Jetty community including information on how to contribute code and how to find help.
-
-Feedback is always welcome!
-Additionally, if you are interested in how to contribute to the open source project there is a link:#community[section on that as well!]
-
-[[what-jetty-version]]
-=== What Version Do I Use?
-
-Jetty 9 is the most recent version of Jetty and has a great many improvements over previous versions.
-This documentation which focuses on Jetty 9.
-While many people continue to use older versions of Jetty, we generally recommend using Jetty 9 as it represents the version of Jetty that we will actively maintain and improve over the next few years.
-
-_____
-[IMPORTANT]
-It is important that only stable releases are used in production environments.
-Versions that have been deprecated or are released as Milestones (M) or Release Candidates (RC) are not suitable for production as they may contain security flaws or incomplete/non-functioning feature sets.
-_____
-
-.Jetty Versions
-[width="100%",cols="12%,9%,15%,6%,21%,10%,6%,21%",options="header",]
-|=======================================================================
-|Version |Year |Home |JVM |Protocols |Servlet |JSP |Status
-|9.4 |2016- |Eclipse |1.8 |HTTP/1.1 (RFC 7230), HTTP/2 (RFC 7540), WebSocket (RFC 6455, JSR 356), FastCGI |3.1 |2.3 |Stable
-|9.3 |2015- |Eclipse |1.8 |HTTP/1.1 (RFC 7230), HTTP/2 (RFC 7540), WebSocket (RFC 6455, JSR 356), FastCGI |3.1 |2.3 |Stable
-|9.2 |2014-2018 |Eclipse |1.7 |HTTP/1.1 RFC2616, javax.websocket, SPDY v3 |3.1 |2.3 |Deprecated / *End of Life January 2018*
-|8 |2009-2014 |Eclipse/Codehaus |1.6 |HTTP/1.1 RFC2616, WebSocket RFC 6455, SPDY v3 |3.0 |2.2 |Deprecated / *End of Life November 2014*
-|7 |2008-2014 |Eclipse/Codehaus |1.5 |HTTP/1.1 RFC2616, WebSocket RFC 6455, SPDY v3 |2.5 |2.1 |Deprecated / *End of Life November 2014*
-|6 |2006-2010 |Codehaus |1.4-1.5 |HTTP/1.1 RFC2616 |2.5 |2.0 |Deprecated / *End of Life November 2010*
-|5 |2003-2009 |Sourceforge |1.2-1.5 |HTTP/1.1 RFC2616 |2.4 |2.0 |Antique
-|4 |2001-2006 |Sourceforge |1.2, J2ME |HTTP/1.1 RFC2616 |2.3 |1.2 |Ancient
-|3 |1999-2002 |Sourceforge |1.2 |HTTP/1.1 RFC2068 |2.2 |1.1 |Fossilized
-|2 |1998-2000 |Mortbay |1.1 |HTTP/1.0 RFC1945 |2.1 |1.0 |Legendary
-|1 |1995-1998 |Mortbay |1.0 |HTTP/1.0 RFC1945 |- |- |Mythical
-|=======================================================================
 
 [[jetty-javaee]]
 === Jetty and Java EE Web Profile
@@ -167,50 +107,3 @@ Here is the matrix of JSRs for Java EE 6 Web Profile, and how they relate to Jet
 |http://jcp.org/en/jsr/detail?id=303[JSR 303] |Bean Validation 1.0 |No |Yes as part of another technology (JSF), or a stand-alone implementation such as http://www.hibernate.org/subprojects/validator/docs.html[Hiberate
 Validator]
 |=======================================================================
-
-[[quickstart-jetty-coordinates]]
-== Finding Jetty in Maven
-
-_____
-[IMPORTANT]
-It is important that only stable releases are used in production environments.
-Versions that have been deprecated or are released as Milestones (M) or Release Candidates (RC) are not suitable for production as they may contain security flaws or incomplete/non-functioning feature sets.
-_____
-
-[[qsg-maven-coordinates]]
-=== Maven Coordinates
-
-Jetty has existed in Maven Central almost since its inception, though the coordinates have changed over the years.
-When Jetty was based at SourceForge and then The Codehaus it was located under the `groupId` of `org.mortbay.jetty`.
-With Jetty 7 the project moved to the Eclipse foundation and to a new `groupId` at that time to reflect its new home.
-
-The top level Project Object Model (POM) for the Jetty project is located under the following coordinates.
-
-[source, xml, subs="{sub-order}"]
-----
-<dependency>
-  <groupId>org.eclipse.jetty</groupId>
-  <artifactId>jetty-project</artifactId>
-  <version>${project.version}</version>
-</dependency>
-----
-
-[[qsg-changelogs]]
-=== Changelogs in Maven Central
-
-The changes between versions of Jetty are tracked in a file called `VERSIONS.txt`, which is under source control and is generated on release.
-Those generated files are also uploaded into Maven Central during the release of the top level POM. 
-You can find them as a classifier marked artifact.
-
-https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-project/
-
-[source, xml, subs="{sub-order}"]
-----
-<dependency>
-  <groupId>org.eclipse.jetty</groupId>
-  <artifactId>jetty-project</artifactId>
-  <version>${project.version}</version>
-  <classifier>version</classifier>
-  <type>txt</type>
-</dependency>
-----

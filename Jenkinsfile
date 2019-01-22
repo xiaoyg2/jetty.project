@@ -11,7 +11,7 @@ pipeline {
           agent { node { label 'linux' } }
           options { timeout(time: 120, unit: 'MINUTES') }
           steps {
-            mavenBuild("jdk8", "-Pmongodb install", "maven3")
+            mavenBuild("jdk8", "-Pmongodb -Pautobahn install", "maven3")
             // Collect up the jacoco execution results (only on main build)
             jacoco inclusionPattern: '**/org/eclipse/jetty/**/*.class',
                 exclusionPattern: '' +
@@ -44,7 +44,7 @@ pipeline {
           agent { node { label 'linux' } }
           options { timeout(time: 120, unit: 'MINUTES') }
           steps {
-            mavenBuild("jdk11", "-Pmongodb install", "maven3")
+            mavenBuild("jdk11", "-Pmongodb -Pautobahn install", "maven3")
             junit '**/target/surefire-reports/TEST-*.xml,**/target/failsafe-reports/TEST-*.xml'
             warnings consoleParsers: [[parserName: 'Maven'], [parserName: 'Java']]
             maven_invoker reportsFilenamePattern: "**/target/invoker-reports/BUILD*.xml", invokerBuildDir: "**/target/it"

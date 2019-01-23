@@ -145,7 +145,7 @@
             </configuration>
           </execution>
           <execution>
-            <id>administration-guide</id>
+            <id>jetty-guide</id>
             <phase>generate-resources</phase>
             <goals>
               <goal>process-asciidoc</goal>
@@ -153,51 +153,9 @@
             <configuration>
               <backend>html5</backend>
               <templateDir>${web.resources.directory}/asciidoc/template</templateDir>
-              <sourceDirectory>${basedir}/src/main/asciidoc/administration-guide</sourceDirectory>
+              <sourceDirectory>${basedir}/src/main/asciidoc/jetty-guide</sourceDirectory>
               <sourceDocumentName>index.adoc</sourceDocumentName>
-              <outputDirectory>${project.build.directory}/html/administration-guide</outputDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>configuration-guide</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>process-asciidoc</goal>
-            </goals>
-            <configuration>
-              <backend>html5</backend>
-              <templateDir>${web.resources.directory}/asciidoc/template</templateDir>
-              <sourceDirectory>${basedir}/src/main/asciidoc/configuration-guide</sourceDirectory>
-              <sourceDocumentName>index.adoc</sourceDocumentName>
-              <outputDirectory>${project.build.directory}/html/configuration-guide</outputDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>development-guide</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>process-asciidoc</goal>
-            </goals>
-            <configuration>
-              <backend>html5</backend>
-              <templateDir>${web.resources.directory}/asciidoc/template</templateDir>
-              <sourceDirectory>${basedir}/src/main/asciidoc/development-guide</sourceDirectory>
-              <sourceDocumentName>index.adoc</sourceDocumentName>
-              <outputDirectory>${project.build.directory}/html/development-guide</outputDirectory>
-            </configuration>
-          </execution>
-          <execution>
-            <id>reference-guide</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>process-asciidoc</goal>
-            </goals>
-            <configuration>
-              <backend>html5</backend>
-              <templateDir>${web.resources.directory}/asciidoc/template</templateDir>
-              <sourceDirectory>${basedir}/src/main/asciidoc/reference-guide</sourceDirectory>
-              <sourceDocumentName>index.adoc</sourceDocumentName>
-              <outputDirectory>${project.build.directory}/html/reference-guide</outputDirectory>
+              <outputDirectory>${project.build.directory}/html/jetty-guide</outputDirectory>
             </configuration>
           </execution>
           <execution>

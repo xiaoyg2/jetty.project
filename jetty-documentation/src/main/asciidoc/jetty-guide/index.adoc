@@ -16,13 +16,13 @@
 //  ========================================================================
 //
 
-:doctitle: Eclipse Jetty: Configuration Guide
+:doctitle: Eclipse Jetty: The Definitive Guide
 :author: Jetty Developers
 :email: jetty-dev@eclipse.org
 :revnumber: 1.0
 :revdate: {TIMESTAMP}
 :toc: left
-:toc-title: Configuration Guide
+:toc-title: Jetty
 :toc-image: jetty-logo.svg
 :toc-image-url: /jetty/index.html
 
@@ -58,8 +58,7 @@ endif::[]
 // suppress automatic id generation
 :sectids!:
 
-include::deploying/chapter.adoc[]
-include::contexts/chapter.adoc[]
-include::connectors/chapter.adoc[]
-include::security/chapter.adoc[]
-include::jsp/chapter.adoc[]
+include::administration-guide/index.adoc[]
+include::configuration-guide/index.adoc[]
+include::development-guide/index.adoc[]
+include::reference-guide/index.adoc[]

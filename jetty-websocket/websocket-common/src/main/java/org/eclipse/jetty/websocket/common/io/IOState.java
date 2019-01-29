@@ -249,17 +249,13 @@ public class IOState
         }
 
         if (open)
-            openAndCloseLocal(closeInfo);
-        else
-            closeLocal(closeInfo);
-    }
-
-    private void openAndCloseLocal(CloseInfo closeInfo)
-    {
-        // Force the state open (to allow read/write to endpoint)
-        onOpened();
-        if (LOG.isDebugEnabled())
-            LOG.debug("FastClose continuing with Closure");
+        {
+            finalClose.compareAndSet(null, closeInfo); // force final close state
+            // Force the state open (to allow read/write to endpoint)
+            onOpened();
+            if (LOG.isDebugEnabled())
+                LOG.debug("FastClose continuing with Closure");
+        }
         closeLocal(closeInfo);
     }
 

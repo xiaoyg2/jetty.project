@@ -492,7 +492,10 @@ public abstract class AbstractWebSocketConnection extends AbstractConnection imp
             LOG.debug("outgoingFrame({}, {})",frame,callback);
         }
 
-        flusher.enqueue(frame,callback,batchMode);
+        if (flusher.enqueue(frame, callback, batchMode))
+        {
+            flusher.iterate();
+        }
     }
 
     private ReadMode readDiscard(ByteBuffer buffer)

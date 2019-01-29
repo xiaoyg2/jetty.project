@@ -52,7 +52,6 @@ public class FrameFlusher extends IteratingCallback
     private final Deque<FrameEntry> queue = new ArrayDeque<>();
     private final List<FrameEntry> entries;
     private final List<ByteBuffer> buffers;
-    private boolean closed;
     private Throwable terminated;
     private ByteBuffer aggregate;
     private BatchMode batchMode;
@@ -68,7 +67,7 @@ public class FrameFlusher extends IteratingCallback
         this.buffers = new ArrayList<>((maxGather * 2) + 1);
     }
 
-    public void enqueue(Frame frame, WriteCallback callback, BatchMode batchMode)
+    public boolean enqueue(Frame frame, WriteCallback callback, BatchMode batchMode)
     {
         FrameEntry entry = new FrameEntry(frame, callback, batchMode);
 
@@ -86,10 +85,14 @@ public class FrameFlusher extends IteratingCallback
             }
         }
 
+        if (LOG.isDebugEnabled())
+            LOG.debug("Enqueued {} to {}", entry, this);
+
         if (closed == null)
-            iterate();
-        else
-            notifyCallbackFailure(callback, closed);
+            return true;
+
+        notifyCallbackFailure(callback, closed);
+        return false;
     }
 
     @Override
@@ -102,13 +105,10 @@ public class FrameFlusher extends IteratingCallback
         BatchMode currentBatchMode = BatchMode.AUTO;
         synchronized (this)
         {
-            if (closed)
-                return Action.SUCCEEDED;
-
             if (terminated != null)
                 throw terminated;
 
-            while (!queue.isEmpty() && entries.size() <= maxGather)
+            while (!queue.isEmpty() && entries.size() < maxGather)
             {
                 FrameEntry entry = queue.poll();
                 currentBatchMode = BatchMode.max(currentBatchMode, entry.batchMode);
@@ -220,7 +220,7 @@ public class FrameFlusher extends IteratingCallback
         return Action.SCHEDULED;
     }
 
-    private int getQueueSize()
+    public int getQueueSize()
     {
         synchronized (this)
         {
@@ -287,14 +287,13 @@ public class FrameFlusher extends IteratingCallback
         Throwable reason;
         synchronized (this)
         {
-            closed = close;
             reason = terminated;
             if (reason == null)
                 terminated = cause;
         }
         if (LOG.isDebugEnabled())
             LOG.debug("{} {}", reason == null ? "Terminating" : "Terminated", this);
-        if (reason == null && !close)
+        if (reason == null)
             iterate();
     }
 

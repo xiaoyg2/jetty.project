@@ -19,9 +19,12 @@
 package org.eclipse.jetty.websocket.server;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.nio.channels.ClosedChannelException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -67,7 +70,7 @@ public class WebSocketCloseTest
         public CountDownLatch closeLatch = new CountDownLatch(1);
         public String closeReason = null;
         public int closeStatusCode = -1;
-        public List<Throwable> errors = new ArrayList<>();
+        public LinkedBlockingQueue<Throwable> errors = new LinkedBlockingQueue<>();
 
         @Override
         public void onWebSocketClose(int statusCode, String reason)
@@ -81,7 +84,7 @@ public class WebSocketCloseTest
         @Override
         public void onWebSocketError(Throwable cause)
         {
-            errors.add(cause);
+            errors.offer(cause);
         }
     }
 
@@ -293,7 +296,15 @@ public class WebSocketCloseTest
             // ensure server socket got close event
             assertThat("Fast Fail Latch",closeSocket.closeLatch.await(5,TimeUnit.SECONDS),is(true));
             assertThat("Fast Fail.statusCode",closeSocket.closeStatusCode,is(StatusCode.SERVER_ERROR));
-            assertThat("Fast Fail.errors",closeSocket.errors.size(),is(1));
+
+            // Validate errors (must be "java.lang.RuntimeException: Intentional Exception from onWebSocketConnect")
+            assertThat("socket.onErrors",closeSocket.errors.size(),greaterThanOrEqualTo(1));
+            Throwable cause = closeSocket.errors.poll(5, TimeUnit.SECONDS);
+            assertThat("Error type",cause,instanceOf(RuntimeException.class));
+            // ... with optional ClosedChannelException
+            cause = closeSocket.errors.peek();
+            if(cause != null)
+                assertThat("Error type",cause,instanceOf(ClosedChannelException.class));
         }
     }
 

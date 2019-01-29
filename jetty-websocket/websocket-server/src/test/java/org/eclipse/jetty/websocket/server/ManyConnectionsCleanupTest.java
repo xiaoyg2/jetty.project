@@ -19,12 +19,14 @@
 package org.eclipse.jetty.websocket.server;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.channels.ClosedChannelException;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -35,14 +37,16 @@ import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.util.log.Logger;
 import org.eclipse.jetty.util.log.StacklessLogging;
+import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
+import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
+import org.eclipse.jetty.websocket.client.WebSocketClient;
 import org.eclipse.jetty.websocket.common.CloseInfo;
-import org.eclipse.jetty.websocket.common.OpCode;
 import org.eclipse.jetty.websocket.common.WebSocketFrame;
 import org.eclipse.jetty.websocket.common.WebSocketSession;
-import org.eclipse.jetty.websocket.common.frames.TextFrame;
+import org.eclipse.jetty.websocket.common.message.TrackingSocket;
 import org.eclipse.jetty.websocket.common.test.BlockheadClient;
 import org.eclipse.jetty.websocket.common.test.BlockheadClientRequest;
 import org.eclipse.jetty.websocket.common.test.BlockheadConnection;
@@ -67,12 +71,12 @@ public class ManyConnectionsCleanupTest
         public CountDownLatch closeLatch = new CountDownLatch(1);
         public String closeReason = null;
         public int closeStatusCode = -1;
-        public List<Throwable> errors = new ArrayList<>();
+        public LinkedBlockingQueue<Throwable> errors = new LinkedBlockingQueue<>();
 
         @Override
         public void onWebSocketClose(int statusCode, String reason)
         {
-            LOG.debug("onWebSocketClose({}, {})",statusCode,reason);
+            LOG.debug("{}.onWebSocketClose({}, {}) - {}", this.getClass().getSimpleName(), statusCode, reason, getSession());
             this.closeStatusCode = statusCode;
             this.closeReason = reason;
             closeLatch.countDown();
@@ -81,7 +85,7 @@ public class ManyConnectionsCleanupTest
         @Override
         public void onWebSocketError(Throwable cause)
         {
-            errors.add(cause);
+            errors.offer(cause);
         }
     }
 
@@ -133,7 +137,6 @@ public class ManyConnectionsCleanupTest
         private static final Logger LOG = Log.getLogger(ManyConnectionsCleanupTest.ContainerSocket.class);
         private final WebSocketServerFactory container;
         private final AtomicInteger calls;
-        private Session session;
 
         public ContainerSocket(WebSocketServerFactory container, AtomicInteger calls)
         {
@@ -145,31 +148,32 @@ public class ManyConnectionsCleanupTest
         public void onWebSocketText(String message)
         {
             LOG.debug("onWebSocketText({})",message);
-            calls.incrementAndGet();
-            if (message.equalsIgnoreCase("openSessions"))
+            try
             {
-                Collection<WebSocketSession> sessions = container.getOpenSessions();
-
-                StringBuilder ret = new StringBuilder();
-                ret.append("openSessions.size=").append(sessions.size()).append('\n');
-                int idx = 0;
-                for (WebSocketSession sess : sessions)
+                calls.incrementAndGet();
+                if (message.equalsIgnoreCase("openSessions"))
                 {
-                    ret.append('[').append(idx++).append("] ").append(sess.toString()).append('\n');
-                }
-                session.getRemote().sendStringByFuture(ret.toString());
-                session.close(StatusCode.NORMAL,"ContainerSocket");
-            } else if(message.equalsIgnoreCase("calls"))
-            {
-                session.getRemote().sendStringByFuture(String.format("calls=%,d",calls.get()));
-            }
-        }
+                    Collection<WebSocketSession> sessions = container.getOpenSessions();
 
-        @Override
-        public void onWebSocketConnect(Session sess)
-        {
-            LOG.debug("onWebSocketConnect({})",sess);
-            this.session = sess;
+                    StringBuilder ret = new StringBuilder();
+                    ret.append("openSessions.size=").append(sessions.size()).append('\n');
+                    int idx = 0;
+                    for (WebSocketSession sess : sessions)
+                    {
+                        ret.append('[').append(idx++).append("] ").append(sess.toString()).append('\n');
+                    }
+                    getRemote().sendString(ret.toString());
+                    getSession().close(StatusCode.NORMAL, "Close from server");
+                }
+                else if (message.equalsIgnoreCase("calls"))
+                {
+                    getRemote().sendString(String.format("calls=%,d", calls.get()));
+                }
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -273,42 +277,36 @@ public class ManyConnectionsCleanupTest
                 dropConnection();
             }
         }
-        
-        BlockheadClientRequest request = client.newWsRequest(server.getServerUri());
-        request.header(HttpHeader.SEC_WEBSOCKET_SUBPROTOCOL, "container");
-        request.idleTimeout(1, TimeUnit.SECONDS);
 
-        Future<BlockheadConnection> connFut = request.sendAsync();
+        WebSocketClient client = new WebSocketClient();
+        client.setMaxIdleTimeout(1000);
+        client.start();
 
-        try (BlockheadConnection clientConn = connFut.get(Timeouts.CONNECT, Timeouts.CONNECT_UNIT))
+        try
         {
-            clientConn.write(new TextFrame().setPayload("calls"));
-            clientConn.write(new TextFrame().setPayload("openSessions"));
+            TrackingSocket clientSocket = new TrackingSocket();
+            ClientUpgradeRequest headers = new ClientUpgradeRequest();
+            headers.setSubProtocols("container");
+            Future<Session> fut = client.connect(clientSocket, server.getServerUri(), headers);
+            Session session = fut.get(10, TimeUnit.SECONDS);
 
-            LinkedBlockingQueue<WebSocketFrame> frames = clientConn.getFrameQueue();
-            WebSocketFrame frame;
-            String resp;
-            
-            frame = frames.poll(Timeouts.POLL_EVENT, Timeouts.POLL_EVENT_UNIT);
-            assertThat("frames[0].opcode",frame.getOpCode(),is(OpCode.TEXT));
-            resp = frame.getPayloadAsUTF8();
-            assertThat("Should only have 1 open session",resp,containsString("calls=" + ((iterationCount * 2) + 1)));
+            RemoteEndpoint remote = session.getRemote();
+            remote.sendString("calls");
+            remote.sendString("openSessions");
 
-            frame = frames.poll(Timeouts.POLL_EVENT, Timeouts.POLL_EVENT_UNIT);
-            assertThat("frames[1].opcode",frame.getOpCode(),is(OpCode.TEXT));
-            resp = frame.getPayloadAsUTF8();
-            assertThat("Should only have 1 open session",resp,containsString("openSessions.size=1\n"));
+            String msg;
 
-            frame = frames.poll(Timeouts.POLL_EVENT, Timeouts.POLL_EVENT_UNIT);
-            assertThat("frames[2].opcode",frame.getOpCode(),is(OpCode.CLOSE));
-            CloseInfo close = new CloseInfo(frame);
-            assertThat("Close Status Code",close.getStatusCode(),is(StatusCode.NORMAL));
-            clientConn.write(close.asFrame()); // respond with close
+            msg = clientSocket.messageQueue.poll(Timeouts.POLL_EVENT, Timeouts.POLL_EVENT_UNIT);
+            assertThat("Calls received on server", msg, containsString("calls=" + ((iterationCount * 2) + 1)));
 
-            // ensure server socket got close event
-            assertThat("Open Sessions Latch",closeSocket.closeLatch.await(1,TimeUnit.SECONDS),is(true));
-            assertThat("Open Sessions.statusCode",closeSocket.closeStatusCode,is(StatusCode.NORMAL));
-            assertThat("Open Sessions.errors",closeSocket.errors.size(),is(0));
+            msg = clientSocket.messageQueue.poll(Timeouts.POLL_EVENT, Timeouts.POLL_EVENT_UNIT);
+            assertThat("Open session on server", msg, containsString("openSessions.size=1\n"));
+
+            clientSocket.assertCloseCode(StatusCode.NORMAL);
+        }
+        finally
+        {
+            client.stop();
         }
     }
 
@@ -355,7 +353,15 @@ public class ManyConnectionsCleanupTest
             // ensure server socket got close event
             assertThat("Fast Fail Latch",closeSocket.closeLatch.await(1,TimeUnit.SECONDS),is(true));
             assertThat("Fast Fail.statusCode",closeSocket.closeStatusCode,is(StatusCode.SERVER_ERROR));
-            assertThat("Fast Fail.errors",closeSocket.errors.size(),is(1));
+
+            // Validate errors (must be "java.lang.RuntimeException: Intentional Exception from onWebSocketConnect")
+            assertThat("socket.onErrors",closeSocket.errors.size(),greaterThanOrEqualTo(1));
+            Throwable cause = closeSocket.errors.poll(5, TimeUnit.SECONDS);
+            assertThat("Error type",cause,instanceOf(RuntimeException.class));
+            // ... with optional ClosedChannelException
+            cause = closeSocket.errors.peek();
+            if(cause != null)
+                assertThat("Error type",cause,instanceOf(ClosedChannelException.class));
         }
     }
     

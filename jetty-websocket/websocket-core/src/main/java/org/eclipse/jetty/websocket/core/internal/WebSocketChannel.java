@@ -117,8 +117,6 @@ public class WebSocketChannel implements IncomingFrames, FrameHandler.CoreSessio
 
     public void assertValidOutgoing(Frame frame) throws CloseException
     {
-        // TODO check that it is not masked, since masking is done later
-
         if (!OpCode.isKnown(frame.getOpCode()))
             throw new ProtocolException("Unknown opcode: " + frame.getOpCode());
 

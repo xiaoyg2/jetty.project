@@ -105,11 +105,11 @@ public class FrameFlusher extends IteratingCallback
         BatchMode currentBatchMode = BatchMode.AUTO;
         synchronized (this)
         {
-            if (terminated != null)
-                throw terminated;
-
             while (!queue.isEmpty() && entries.size() < maxGather)
             {
+                if (terminated != null)
+                    throw terminated;
+
                 FrameEntry entry = queue.poll();
                 currentBatchMode = BatchMode.max(currentBatchMode, entry.batchMode);
 
@@ -243,8 +243,7 @@ public class FrameFlusher extends IteratingCallback
             entry.release();
             if (entry.frame.getOpCode() == OpCode.CLOSE)
             {
-                terminate(new ClosedChannelException(), true);
-                endPoint.shutdownOutput();
+                terminated = new ClosedChannelException();
             }
         }
         entries.clear();
@@ -282,7 +281,7 @@ public class FrameFlusher extends IteratingCallback
         }
     }
 
-    void terminate(Throwable cause, boolean close)
+    void terminate(Throwable cause)
     {
         Throwable reason;
         synchronized (this)

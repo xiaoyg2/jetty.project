@@ -220,8 +220,21 @@ public class WebSocketSession extends ContainerLifeCycle implements Session, Rem
 
         if (closed.compareAndSet(false, true))
         {
+            // only send close frame once
             CloseFrame frame = closeInfo.asFrame();
             connection.outgoingFrame(frame, new OnCloseLocalCallback(callback, connection, closeInfo), BatchMode.OFF);
+        }
+        else
+        {
+            if(closeInfo.isAbnormal())
+            {
+                // Force local close
+                connection.getIOState().onAbnormalClose(closeInfo);
+            }
+            if (callback != null)
+            {
+                callback.failed(new IllegalStateException("Cannot send more then one close"));
+            }
         }
     }
 

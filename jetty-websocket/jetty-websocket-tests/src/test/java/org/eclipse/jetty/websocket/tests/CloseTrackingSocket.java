@@ -16,7 +16,7 @@
 //  ========================================================================
 //
 
-package org.eclipse.jetty.websocket.tests.client;
+package org.eclipse.jetty.websocket.tests;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.CountDownLatch;
@@ -53,12 +53,6 @@ public class CloseTrackingSocket extends WebSocketAdapter
 
     public LinkedBlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
     public AtomicReference<Throwable> error = new AtomicReference<>();
-
-    public void assertNoCloseEvent()
-    {
-        assertThat("Client Close Event (count)", closeLatch.getCount(), is(1L));
-        assertThat("Client Close Event Status Code", closeCode, is(-1));
-    }
 
     public void assertReceivedCloseEvent(int clientTimeoutMs, Matcher<Integer> statusCodeMatcher, Matcher<String> reasonMatcher)
             throws InterruptedException

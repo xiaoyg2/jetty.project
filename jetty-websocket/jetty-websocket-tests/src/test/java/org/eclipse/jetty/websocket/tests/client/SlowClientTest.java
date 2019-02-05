@@ -33,6 +33,7 @@ import org.eclipse.jetty.websocket.api.util.WSURI;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
+import org.eclipse.jetty.websocket.tests.CloseTrackingSocket;
 import org.eclipse.jetty.websocket.tests.EchoSocket;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;

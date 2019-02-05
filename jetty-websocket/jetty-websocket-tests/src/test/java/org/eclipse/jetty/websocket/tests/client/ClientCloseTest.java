@@ -50,6 +50,7 @@ import org.eclipse.jetty.websocket.common.CloseInfo;
 import org.eclipse.jetty.websocket.common.OpCode;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
+import org.eclipse.jetty.websocket.tests.CloseTrackingSocket;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -81,9 +82,6 @@ public class ClientCloseTest
     {
         // Wait for client connect on via future
         Session session = clientFuture.get(30, SECONDS);
-
-        // Wait for client connect via client websocket
-        assertThat("Client WebSocket is Open", clientSocket.openLatch.await(30, SECONDS), is(true));
 
         try
         {
@@ -243,7 +241,7 @@ public class ClientCloseTest
     }
 
     @Test
-    public void testReadEOF() throws Exception
+    public void testRemoteDisconnect() throws Exception
     {
         // Set client timeout
         final int timeout = 1000;
@@ -263,9 +261,6 @@ public class ClientCloseTest
             // client sends close frame (triggering server connection abort)
             final String origCloseReason = "abort";
             clientSocket.getSession().close(StatusCode.NORMAL, origCloseReason);
-
-            // client should not have received close message (yet)
-            clientSocket.assertNoCloseEvent();
 
             // client reads -1 (EOF)
             // client triggers close event on client ws-endpoint
@@ -333,6 +328,8 @@ public class ClientCloseTest
         final int timeout = 1000;
         client.setMaxIdleTimeout(timeout);
 
+        // TODO: client.addBean(ConnectionListener);
+
         int clientCount = 3;
         URI wsUri = WSURI.toWebsocket(server.getURI().resolve("/ws"));
         List<CloseTrackingSocket> clientSockets = new ArrayList<>();
@@ -358,6 +355,10 @@ public class ClientCloseTest
             {
                 clientSockets.get(i).assertReceivedCloseEvent(timeout, is(StatusCode.SHUTDOWN), containsString("Shutdown"));
             }
+
+            // TODO: ensure all Sessions are gone. connections are gone. etc. (client and server)
+            // TODO: ensure ConnectionListener onClose is called 3 times
+            client.getOpenSessions().isEmpty();
         });
     }
 
@@ -365,7 +366,7 @@ public class ClientCloseTest
     public void testWriteException() throws Exception
     {
         // Set client timeout
-        final int timeout = 1000;
+        final int timeout = 2000;
         client.setMaxIdleTimeout(timeout);
 
         // Client connects
@@ -380,9 +381,12 @@ public class ClientCloseTest
         EndPoint endp = clientSocket.getEndPoint();
         endp.shutdownOutput();
 
+        // TODO: race condition.  Client CLOSE actions racin SERVER close actions.
+//        SECONDS.sleep(1); // let server detect EOF and respond
+
         // client enqueue close frame
         // client write failure
-        final String origCloseReason = "Normal Close";
+        final String origCloseReason = "Normal Close from Client";
         clientSocket.getSession().close(StatusCode.NORMAL, origCloseReason);
 
         assertThat("OnError Latch", clientSocket.errorLatch.await(2, SECONDS), is(true));
@@ -467,19 +471,20 @@ public class ClientCloseTest
                         session.getRemote().sendString("Hello");
                         session.getRemote().sendString("World");
                     }
-                    catch (IOException e)
+                    catch (Throwable e)
                     {
-                        LOG.warn(e);
+                        LOG.warn("OOPS", e);
                     }
                 }
                 else if (reason.equals("abort"))
                 {
                     try
                     {
+                        SECONDS.sleep(1);
                         LOG.info("Server aborting session abruptly");
                         session.disconnect();
                     }
-                    catch (IOException ignore)
+                    catch (Throwable ignore)
                     {
                         LOG.ignore(ignore);
                     }

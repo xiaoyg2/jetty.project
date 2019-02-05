@@ -52,6 +52,8 @@ public class FrameFlusher extends IteratingCallback
     private final Deque<FrameEntry> queue = new ArrayDeque<>();
     private final List<FrameEntry> entries;
     private final List<ByteBuffer> buffers;
+    private boolean closed;
+    private boolean canEnqueue = true;
     private Throwable terminated;
     private ByteBuffer aggregate;
     private BatchMode batchMode;
@@ -71,27 +73,47 @@ public class FrameFlusher extends IteratingCallback
     {
         FrameEntry entry = new FrameEntry(frame, callback, batchMode);
 
-        Throwable closed;
+        Throwable dead;
+
         synchronized (this)
         {
-            closed = terminated;
-            if (closed == null)
+            if (canEnqueue)
             {
-                byte opCode = frame.getOpCode();
-                if (opCode == OpCode.PING || opCode == OpCode.PONG)
-                    queue.offerFirst(entry);
-                else
-                    queue.offerLast(entry);
+                dead = terminated;
+                if (dead == null)
+                {
+                    byte opCode = frame.getOpCode();
+                    if (opCode == OpCode.PING || opCode == OpCode.PONG)
+                    {
+                        queue.offerFirst(entry);
+                    }
+                    else
+                    {
+                        queue.offerLast(entry);
+                    }
+
+                    if (opCode == OpCode.CLOSE)
+                    {
+                        this.canEnqueue = false;
+                    }
+                }
+            }
+            else
+            {
+                dead = new ClosedChannelException();
             }
         }
 
-        if (LOG.isDebugEnabled())
-            LOG.debug("Enqueued {} to {}", entry, this);
-
-        if (closed == null)
+        if (dead == null)
+        {
+            if (LOG.isDebugEnabled())
+            {
+                LOG.debug("Enqueued {} to {}", entry, this);
+            }
             return true;
+        }
 
-        notifyCallbackFailure(callback, closed);
+        notifyCallbackFailure(callback, dead);
         return false;
     }
 
@@ -105,11 +127,18 @@ public class FrameFlusher extends IteratingCallback
         BatchMode currentBatchMode = BatchMode.AUTO;
         synchronized (this)
         {
+            if (closed)
+            {
+                return Action.SUCCEEDED;
+            }
+
+            if (terminated != null)
+            {
+                throw terminated;
+            }
+
             while (!queue.isEmpty() && entries.size() < maxGather)
             {
-                if (terminated != null)
-                    throw terminated;
-
                 FrameEntry entry = queue.poll();
                 currentBatchMode = BatchMode.max(currentBatchMode, entry.batchMode);
 
@@ -220,7 +249,7 @@ public class FrameFlusher extends IteratingCallback
         return Action.SCHEDULED;
     }
 
-    public int getQueueSize()
+    private int getQueueSize()
     {
         synchronized (this)
         {
@@ -243,7 +272,13 @@ public class FrameFlusher extends IteratingCallback
             entry.release();
             if (entry.frame.getOpCode() == OpCode.CLOSE)
             {
-                terminated = new ClosedChannelException();
+                synchronized (this)
+                {
+                    // we know that enqueue protects us.
+                    // and the processing will not contain extra frame entries.
+                    closed = true;
+                }
+                endPoint.shutdownOutput();
             }
         }
         entries.clear();
@@ -254,12 +289,13 @@ public class FrameFlusher extends IteratingCallback
     {
         releaseAggregate();
 
-        Throwable closed;
         synchronized (this)
         {
-            closed = terminated;
-            if (closed == null)
+            if (terminated == null) {
                 terminated = failure;
+                if (LOG.isDebugEnabled())
+                    LOG.debug("Write flush failure", failure);
+            }
             entries.addAll(queue);
             queue.clear();
         }

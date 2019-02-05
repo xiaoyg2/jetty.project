@@ -71,15 +71,7 @@ public abstract class AbstractWebSocketConnection extends AbstractConnection imp
         {
             super.onCompleteFailure(failure);
             notifyError(failure);
-            if (ioState.wasAbnormalClose())
-            {
-                LOG.ignore(failure);
-                return;
-            }
-            if (LOG.isDebugEnabled())
-                LOG.debug("Write flush failure", failure);
             ioState.onWriteFailure(failure);
-            disconnect();
         }
     }
 

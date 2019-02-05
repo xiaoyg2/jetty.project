@@ -21,7 +21,7 @@ package org.eclipse.jetty.websocket.common.io;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
@@ -74,8 +74,8 @@ public class FrameFlusherTest
         FutureWriteCallback closeCallback = new FutureWriteCallback();
         FutureWriteCallback textFrameCallback = new FutureWriteCallback();
 
-        frameFlusher.enqueue(closeFrame, closeCallback, batchMode);
-        frameFlusher.enqueue(textFrame, textFrameCallback, batchMode);
+        assertTrue(frameFlusher.enqueue(closeFrame, closeCallback, batchMode));
+        assertFalse(frameFlusher.enqueue(textFrame, textFrameCallback, batchMode));
         frameFlusher.iterate();
 
         closeCallback.get(5, TimeUnit.SECONDS);

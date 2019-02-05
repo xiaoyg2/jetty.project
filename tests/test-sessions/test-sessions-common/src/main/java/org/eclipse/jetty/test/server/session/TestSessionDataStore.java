@@ -25,6 +25,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.eclipse.jetty.server.session.AbstractSessionDataStore;
+import org.eclipse.jetty.server.session.SessionData;
+
 /**
  * TestSessionDataStore
  *
@@ -33,7 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class TestSessionDataStore extends AbstractSessionDataStore
 {
-    public Map<String,SessionData> _map = new ConcurrentHashMap<>();
+    public Map<String, SessionData> _map = new ConcurrentHashMap<>();
     public AtomicInteger _numSaves = new AtomicInteger(0);
 
     public final boolean _passivating;

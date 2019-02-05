@@ -21,6 +21,7 @@ package org.eclipse.jetty.test.server.session;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.eclipse.jetty.server.session.SessionHandler;
 
 
 /**

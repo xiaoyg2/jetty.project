@@ -20,6 +20,8 @@
 package org.eclipse.jetty.server.session;
 
 import org.eclipse.jetty.session.infinispan.InfinispanSessionDataStoreFactory;
+import org.eclipse.jetty.test.server.session.AbstractClusteredOrphanedSessionTest;
+import org.eclipse.jetty.test.server.session.AbstractTestBase;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -48,7 +50,7 @@ public class ClusteredOrphanedSessionTest extends AbstractClusteredOrphanedSessi
     
 
     /** 
-     * @see org.eclipse.jetty.server.session.AbstractTestBase#createSessionDataStoreFactory()
+     * @see AbstractTestBase#createSessionDataStoreFactory()
      */
     @Override
     public SessionDataStoreFactory createSessionDataStoreFactory()

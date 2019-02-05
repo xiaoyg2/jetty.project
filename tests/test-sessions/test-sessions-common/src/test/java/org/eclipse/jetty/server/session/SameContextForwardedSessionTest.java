@@ -39,7 +39,9 @@ import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.junit.jupiter.api.BeforeEach;
+import org.eclipse.jetty.test.server.session.TestContextScopeListener;
+import org.eclipse.jetty.test.server.session.TestServer;
+import org.eclipse.jetty.test.server.session.TestSessionDataStoreFactory;
 import org.junit.jupiter.api.Test;
 
 

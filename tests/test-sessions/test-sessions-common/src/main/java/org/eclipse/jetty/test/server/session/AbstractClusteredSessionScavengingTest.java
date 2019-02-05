@@ -16,7 +16,7 @@
 //  ========================================================================
 //
 
-package org.eclipse.jetty.server.session;
+package org.eclipse.jetty.test.server.session;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -40,8 +40,16 @@ import javax.servlet.http.HttpSessionListener;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
+import org.eclipse.jetty.server.session.AbstractSessionDataStoreFactory;
+import org.eclipse.jetty.server.session.DefaultSessionCache;
+import org.eclipse.jetty.server.session.DefaultSessionCacheFactory;
+import org.eclipse.jetty.server.session.Session;
+import org.eclipse.jetty.server.session.SessionCache;
+import org.eclipse.jetty.server.session.SessionDataStoreFactory;
+import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -117,7 +125,7 @@ public abstract class AbstractClusteredSessionScavengingTest extends AbstractTes
                     assertEquals("test", response1.getContentAsString());
                     String sessionCookie = response1.getHeaders().get("Set-Cookie");
                     assertTrue( sessionCookie != null );
-                    assertEquals(1, ((DefaultSessionCache)m1.getSessionCache()).getSessionsCurrent());
+                    Assertions.assertEquals(1, ((DefaultSessionCache)m1.getSessionCache()).getSessionsCurrent());
                     assertEquals(1, ((DefaultSessionCache)m1.getSessionCache()).getSessionsMax());
                     assertEquals(1, ((DefaultSessionCache)m1.getSessionCache()).getSessionsTotal());
                     // Mangle the cookie, replacing Path with $Path, etc.

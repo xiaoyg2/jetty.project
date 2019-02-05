@@ -19,8 +19,9 @@
 package org.eclipse.jetty.nosql.mongodb;
 
 
-import org.eclipse.jetty.server.session.AbstractClusteredInvalidationSessionTest;
+import org.eclipse.jetty.test.server.session.AbstractClusteredInvalidationSessionTest;
 import org.eclipse.jetty.server.session.SessionDataStoreFactory;
+import org.eclipse.jetty.test.server.session.AbstractTestBase;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -41,7 +42,7 @@ public class ClusteredInvalidateSessionTest extends AbstractClusteredInvalidatio
     }
 
     /** 
-     * @see org.eclipse.jetty.server.session.AbstractTestBase#createSessionDataStoreFactory()
+     * @see AbstractTestBase#createSessionDataStoreFactory()
      */
     @Override
     public SessionDataStoreFactory createSessionDataStoreFactory()

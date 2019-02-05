@@ -39,6 +39,8 @@ import javax.servlet.http.HttpSession;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
+import org.eclipse.jetty.test.server.session.TestServer;
+import org.eclipse.jetty.test.server.session.TestSessionDataStoreFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 

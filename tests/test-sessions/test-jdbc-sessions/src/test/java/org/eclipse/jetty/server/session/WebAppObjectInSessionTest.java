@@ -18,6 +18,8 @@
 
 package org.eclipse.jetty.server.session;
 
+import org.eclipse.jetty.test.server.session.AbstractTestBase;
+import org.eclipse.jetty.test.server.session.AbstractWebAppObjectInSessionTest;
 import org.eclipse.jetty.util.resource.Resource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +33,7 @@ public class WebAppObjectInSessionTest extends AbstractWebAppObjectInSessionTest
 {
     
     /** 
-     * @see org.eclipse.jetty.server.session.AbstractTestBase#createSessionDataStoreFactory()
+     * @see AbstractTestBase#createSessionDataStoreFactory()
      */
     @Override
     public SessionDataStoreFactory createSessionDataStoreFactory()

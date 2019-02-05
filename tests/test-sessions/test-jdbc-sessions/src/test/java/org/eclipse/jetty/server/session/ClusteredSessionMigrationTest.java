@@ -33,6 +33,8 @@ import javax.servlet.http.HttpSession;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
+import org.eclipse.jetty.test.server.session.AbstractTestBase;
+import org.eclipse.jetty.test.server.session.TestServer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

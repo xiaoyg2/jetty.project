@@ -16,15 +16,30 @@
 //  ========================================================================
 //
 
-package org.eclipse.jetty.server.session;
+
+package org.eclipse.jetty.test.server.session;
+
+import org.eclipse.jetty.server.session.AbstractSessionDataStoreFactory;
+import org.eclipse.jetty.server.session.SessionDataStore;
+import org.eclipse.jetty.server.session.SessionHandler;
 
 /**
- * Foo
+ * TestSessionDataStoreFactory
  *
  *
  */
-public interface Foo
+public class TestSessionDataStoreFactory extends AbstractSessionDataStoreFactory
 {
-    public int getInt();
-    public void setInt (int i);
+
+    /** 
+     * @see org.eclipse.jetty.server.session.SessionDataStoreFactory#getSessionDataStore(org.eclipse.jetty.server.session.SessionHandler)
+     */
+    @Override
+    public SessionDataStore getSessionDataStore(SessionHandler handler) throws Exception
+    {
+       TestSessionDataStore store = new TestSessionDataStore();
+       store.setSavePeriodSec(getSavePeriodSec());
+       return store;
+    }
+
 }

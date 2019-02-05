@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.session.infinispan.InfinispanSessionDataStore;
 import org.eclipse.jetty.session.infinispan.InfinispanSessionDataStoreFactory;
+import org.eclipse.jetty.test.server.session.AbstractSessionDataStoreTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -126,7 +127,7 @@ public class InfinispanSessionDataStoreTest extends AbstractSessionDataStoreTest
      * This test currently won't work for Infinispan - there is currently no
      * means to query it to find sessions that have expired.
      * 
-     * @see org.eclipse.jetty.server.session.AbstractSessionDataStoreTest#testGetExpiredPersistedAndExpiredOnly()
+     * @see AbstractSessionDataStoreTest#testGetExpiredPersistedAndExpiredOnly()
      */
     @Override
     public void testGetExpiredPersistedAndExpiredOnly() throws Exception

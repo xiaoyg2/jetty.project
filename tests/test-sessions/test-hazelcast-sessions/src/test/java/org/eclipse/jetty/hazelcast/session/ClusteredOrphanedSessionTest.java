@@ -19,8 +19,9 @@
 
 package org.eclipse.jetty.hazelcast.session;
 
-import org.eclipse.jetty.server.session.AbstractClusteredOrphanedSessionTest;
+import org.eclipse.jetty.test.server.session.AbstractClusteredOrphanedSessionTest;
 import org.eclipse.jetty.server.session.SessionDataStoreFactory;
+import org.eclipse.jetty.test.server.session.AbstractTestBase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -48,7 +49,7 @@ public class ClusteredOrphanedSessionTest
     }
 
     /**
-     * @see org.eclipse.jetty.server.session.AbstractTestBase#createSessionDataStoreFactory()
+     * @see AbstractTestBase#createSessionDataStoreFactory()
      */
     @Override
     public SessionDataStoreFactory createSessionDataStoreFactory()

@@ -44,6 +44,9 @@ import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.test.server.session.TestHttpSessionListener;
+import org.eclipse.jetty.test.server.session.TestServer;
+import org.eclipse.jetty.test.server.session.TestSessionDataStoreFactory;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -71,7 +74,7 @@ public class SessionListenerTest
         SessionDataStoreFactory storeFactory = new TestSessionDataStoreFactory();
         ((AbstractSessionDataStoreFactory)storeFactory).setGracePeriodSec(scavengePeriod);
 
-        TestServer server = new TestServer(0, inactivePeriod, scavengePeriod, 
+        TestServer server = new TestServer(0, inactivePeriod, scavengePeriod,
                                            cacheFactory, storeFactory);
         ServletContextHandler context = server.addContext(contextPath);
         TestHttpSessionListener listener = new TestHttpSessionListener(true);

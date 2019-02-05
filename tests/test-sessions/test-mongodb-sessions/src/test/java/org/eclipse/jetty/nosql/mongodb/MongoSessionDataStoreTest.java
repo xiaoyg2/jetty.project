@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jetty.server.session.AbstractSessionDataStoreFactory;
-import org.eclipse.jetty.server.session.AbstractSessionDataStoreTest;
+import org.eclipse.jetty.test.server.session.AbstractSessionDataStoreTest;
 import org.eclipse.jetty.server.session.SessionContext;
 import org.eclipse.jetty.server.session.SessionData;
 import org.eclipse.jetty.server.session.SessionDataStore;

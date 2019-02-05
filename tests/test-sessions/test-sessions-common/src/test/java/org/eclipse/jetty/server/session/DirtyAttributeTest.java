@@ -40,6 +40,9 @@ import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.test.server.session.TestContextScopeListener;
+import org.eclipse.jetty.test.server.session.TestServer;
+import org.eclipse.jetty.test.server.session.TestSessionDataStore;
 import org.junit.jupiter.api.Test;
 
 
@@ -62,7 +65,7 @@ public class DirtyAttributeTest
     {
 
         /** 
-         * @see org.eclipse.jetty.server.session.TestSessionDataStore#isPassivating()
+         * @see TestSessionDataStore#isPassivating()
          */
         @Override
         public boolean isPassivating()

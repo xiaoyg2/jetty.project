@@ -19,6 +19,8 @@
 package org.eclipse.jetty.server.session;
 
 
+import org.eclipse.jetty.test.server.session.AbstractClusteredInvalidationSessionTest;
+import org.eclipse.jetty.test.server.session.AbstractTestBase;
 import org.junit.jupiter.api.AfterEach;
 
 /**
@@ -36,7 +38,7 @@ public class ClusteredInvalidationSessionTest extends AbstractClusteredInvalidat
 
 
     /** 
-     * @see org.eclipse.jetty.server.session.AbstractTestBase#createSessionDataStoreFactory()
+     * @see AbstractTestBase#createSessionDataStoreFactory()
      */
     @Override
     public SessionDataStoreFactory createSessionDataStoreFactory()

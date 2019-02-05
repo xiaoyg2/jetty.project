@@ -16,34 +16,17 @@
 //  ========================================================================
 //
 
-package org.eclipse.jetty.server.session;
 
-import java.io.Serializable;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+package org.eclipse.jetty.test.server.session;
+
+import org.eclipse.jetty.server.session.SessionDataStoreFactory;
 
 /**
- * ProxiableSessionAttributeObjectInvocationHandler
+ * AbstractTestBase
  *
  *
  */
-public class FooInvocationHandler implements InvocationHandler, Serializable
+public abstract class AbstractTestBase
 {
-    private static final long serialVersionUID = -4009478822490178554L;
-    
-    private Foo foo;
-    
-    public FooInvocationHandler (Foo f)
-    {
-        foo = f;
-    }
-    
- 
-    
-    @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
-    {
-        return method.invoke(foo, args);
-    }
-
+    public abstract SessionDataStoreFactory createSessionDataStoreFactory ();
 }

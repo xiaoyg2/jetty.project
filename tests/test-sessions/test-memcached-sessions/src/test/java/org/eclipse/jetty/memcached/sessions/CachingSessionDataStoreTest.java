@@ -41,7 +41,7 @@ import org.eclipse.jetty.server.session.SessionData;
 import org.eclipse.jetty.server.session.SessionDataMap;
 import org.eclipse.jetty.server.session.SessionDataStore;
 import org.eclipse.jetty.server.session.SessionDataStoreFactory;
-import org.eclipse.jetty.server.session.TestServer;
+import org.eclipse.jetty.test.server.session.TestServer;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.junit.jupiter.api.Test;
 /**

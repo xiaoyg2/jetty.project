@@ -28,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.test.server.session.AbstractTestBase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

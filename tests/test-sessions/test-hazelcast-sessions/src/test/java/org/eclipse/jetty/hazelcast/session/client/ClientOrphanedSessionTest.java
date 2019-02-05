@@ -20,7 +20,7 @@
 package org.eclipse.jetty.hazelcast.session.client;
 
 import org.eclipse.jetty.hazelcast.session.HazelcastTestHelper;
-import org.eclipse.jetty.server.session.AbstractClusteredOrphanedSessionTest;
+import org.eclipse.jetty.test.server.session.AbstractClusteredOrphanedSessionTest;
 import org.eclipse.jetty.server.session.SessionDataStoreFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

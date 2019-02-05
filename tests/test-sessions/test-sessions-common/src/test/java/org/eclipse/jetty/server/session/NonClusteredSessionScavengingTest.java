@@ -40,6 +40,12 @@ import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.test.server.session.AbstractTestBase;
+import org.eclipse.jetty.test.server.session.TestContextScopeListener;
+import org.eclipse.jetty.test.server.session.TestHttpSessionListener;
+import org.eclipse.jetty.test.server.session.TestServer;
+import org.eclipse.jetty.test.server.session.TestSessionDataStoreFactory;
+import org.eclipse.jetty.test.server.session.TestSessionHandler;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -73,7 +79,7 @@ public class NonClusteredSessionScavengingTest extends AbstractTestBase
         SessionDataStoreFactory storeFactory = createSessionDataStoreFactory();
 
 
-        TestServer server1 = new TestServer(0, inactivePeriod, scavengePeriod, 
+        TestServer server1 = new TestServer(0, inactivePeriod, scavengePeriod,
                                             cacheFactory, storeFactory);
         ServletContextHandler context1 = server1.addContext(contextPath);
         context1.addServlet(TestServlet.class, servletMapping);

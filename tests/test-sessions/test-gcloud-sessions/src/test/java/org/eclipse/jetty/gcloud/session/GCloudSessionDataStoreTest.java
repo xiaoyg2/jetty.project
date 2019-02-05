@@ -19,7 +19,7 @@
 
 package org.eclipse.jetty.gcloud.session;
 
-import org.eclipse.jetty.server.session.AbstractSessionDataStoreTest;
+import org.eclipse.jetty.test.server.session.AbstractSessionDataStoreTest;
 import org.eclipse.jetty.server.session.SessionData;
 import org.eclipse.jetty.server.session.SessionDataStoreFactory;
 import org.junit.jupiter.api.AfterAll;

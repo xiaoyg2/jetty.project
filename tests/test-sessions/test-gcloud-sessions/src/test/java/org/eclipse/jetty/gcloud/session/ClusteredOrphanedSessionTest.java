@@ -19,8 +19,9 @@
 
 package org.eclipse.jetty.gcloud.session;
 
-import org.eclipse.jetty.server.session.AbstractClusteredOrphanedSessionTest;
+import org.eclipse.jetty.test.server.session.AbstractClusteredOrphanedSessionTest;
 import org.eclipse.jetty.server.session.SessionDataStoreFactory;
+import org.eclipse.jetty.test.server.session.AbstractTestBase;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ public class ClusteredOrphanedSessionTest extends AbstractClusteredOrphanedSessi
 
 
     /** 
-     * @see org.eclipse.jetty.server.session.AbstractTestBase#createSessionDataStoreFactory()
+     * @see AbstractTestBase#createSessionDataStoreFactory()
      */
     @Override
     public SessionDataStoreFactory createSessionDataStoreFactory()

@@ -17,7 +17,7 @@
 //
 
 
-package org.eclipse.jetty.server.session;
+package org.eclipse.jetty.test.server.session;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -34,6 +34,12 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.jetty.server.session.AbstractSessionDataStoreFactory;
+import org.eclipse.jetty.server.session.SessionContext;
+import org.eclipse.jetty.server.session.SessionData;
+import org.eclipse.jetty.server.session.SessionDataStore;
+import org.eclipse.jetty.server.session.SessionDataStoreFactory;
+import org.eclipse.jetty.server.session.UnreadableSessionDataException;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.junit.jupiter.api.Test;
 

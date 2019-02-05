@@ -34,6 +34,7 @@ import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.test.server.session.TestServer;
 import org.junit.jupiter.api.Test;
 
 
@@ -58,7 +59,7 @@ public class ClientCrossContextSessionTest
         cacheFactory.setEvictionPolicy(SessionCache.NEVER_EVICT);
         SessionDataStoreFactory storeFactory = new NullSessionDataStoreFactory();
         
-        TestServer server = new TestServer(0, TestServer.DEFAULT_MAX_INACTIVE,  TestServer.DEFAULT_SCAVENGE_SEC, 
+        TestServer server = new TestServer(0, TestServer.DEFAULT_MAX_INACTIVE,  TestServer.DEFAULT_SCAVENGE_SEC,
                                                            cacheFactory, storeFactory);
         TestServletA servletA = new TestServletA();
         ServletHolder holderA = new ServletHolder(servletA);

@@ -22,7 +22,7 @@ package org.eclipse.jetty.server.session.remote;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.eclipse.jetty.server.session.AbstractSessionDataStoreFactory;
-import org.eclipse.jetty.server.session.AbstractSessionDataStoreTest;
+import org.eclipse.jetty.test.server.session.AbstractSessionDataStoreTest;
 import org.eclipse.jetty.server.session.SessionContext;
 import org.eclipse.jetty.server.session.SessionData;
 import org.eclipse.jetty.server.session.SessionDataStore;
@@ -105,7 +105,7 @@ public class RemoteInfinispanSessionDataStoreTest extends AbstractSessionDataSto
      * This test currently won't work for Infinispan - there is currently no
      * means to query it to find sessions that have expired.
      * 
-     * @see org.eclipse.jetty.server.session.AbstractSessionDataStoreTest#testGetExpiredPersistedAndExpiredOnly()
+     * @see AbstractSessionDataStoreTest#testGetExpiredPersistedAndExpiredOnly()
      */
     @Override
     public void testGetExpiredPersistedAndExpiredOnly() throws Exception

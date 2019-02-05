@@ -17,7 +17,7 @@
 //
 
 
-package org.eclipse.jetty.server.session;
+package org.eclipse.jetty.test.server.session;
 
 import java.util.HashSet;
 import java.util.Map;

@@ -17,14 +17,27 @@
 //
 
 
-package org.eclipse.jetty.server.session;
+package org.eclipse.jetty.test.server.session;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
 
 /**
- * AbstractTestBase
- *
+ * TestSessionHandler
+ * 
+ * For testing convenience, allows access to some protected fields in SessionHandler
  *
  */
-public abstract class AbstractTestBase
+public class TestSessionHandler extends SessionHandler
 {
-    public abstract SessionDataStoreFactory createSessionDataStoreFactory ();
+
+    /**
+     * @param size the size of the expiry candidates to check
+     */
+    public void assertCandidatesForExpiry (int size)
+    {
+        assertEquals(size, _candidateSessionIdsForExpiry.size());
+    }
+
 }

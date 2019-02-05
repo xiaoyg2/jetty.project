@@ -38,7 +38,7 @@ import org.eclipse.jetty.http.HttpHeader;
 import org.eclipse.jetty.server.session.DefaultSessionCacheFactory;
 import org.eclipse.jetty.server.session.Session;
 import org.eclipse.jetty.server.session.SessionCache;
-import org.eclipse.jetty.server.session.TestServer;
+import org.eclipse.jetty.test.server.session.TestServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

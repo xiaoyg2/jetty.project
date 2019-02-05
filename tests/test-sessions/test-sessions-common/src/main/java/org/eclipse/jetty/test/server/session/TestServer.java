@@ -16,7 +16,7 @@
 //  ========================================================================
 //
 
-package org.eclipse.jetty.server.session;
+package org.eclipse.jetty.test.server.session;
 
 import org.eclipse.jetty.server.NetworkConnector;
 import org.eclipse.jetty.server.Server;

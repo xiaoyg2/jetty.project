@@ -16,7 +16,7 @@
 //  ========================================================================
 //
 
-package org.eclipse.jetty.server.session;
+package org.eclipse.jetty.test.server.session;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,6 +35,10 @@ import javax.servlet.http.HttpSession;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.api.ContentResponse;
 import org.eclipse.jetty.client.api.Request;
+import org.eclipse.jetty.server.session.AbstractSessionDataStoreFactory;
+import org.eclipse.jetty.server.session.DefaultSessionCacheFactory;
+import org.eclipse.jetty.server.session.SessionCache;
+import org.eclipse.jetty.server.session.SessionDataStoreFactory;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.junit.jupiter.api.Test;
@@ -61,7 +65,7 @@ public abstract class AbstractClusteredInvalidationSessionTest extends AbstractT
         int scavengeInterval = 1;
         DefaultSessionCacheFactory cacheFactory1 = new DefaultSessionCacheFactory();
         cacheFactory1.setEvictionPolicy(SessionCache.EVICT_ON_SESSION_EXIT);
-        SessionDataStoreFactory storeFactory1 = createSessionDataStoreFactory();   
+        SessionDataStoreFactory storeFactory1 = createSessionDataStoreFactory();
         ((AbstractSessionDataStoreFactory)storeFactory1).setGracePeriodSec(scavengeInterval);
         
         TestServer server1 = new TestServer(0, maxInactiveInterval, scavengeInterval, cacheFactory1, storeFactory1);

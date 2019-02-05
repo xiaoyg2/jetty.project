@@ -17,7 +17,7 @@
   
   <servlet>
     <servlet-name>HttpMethodsServlet</servlet-name>
-    <servlet-class>org.eclipse.jetty.tests.webapp.HttpMethodsServlet</servlet-class>
+    <servlet-class>org.eclipse.jetty.test.webapp.HttpMethodsServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>HttpMethodsServlet</servlet-name>

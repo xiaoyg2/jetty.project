@@ -16,7 +16,7 @@
 //  ========================================================================
 //
 
-package org.eclipse.jetty.tests.webapp;
+package org.eclipse.jetty.test.webapp;
 
 import java.io.IOException;
 import java.util.Enumeration;

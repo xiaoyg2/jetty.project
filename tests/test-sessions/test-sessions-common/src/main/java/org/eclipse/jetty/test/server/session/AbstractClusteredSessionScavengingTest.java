@@ -46,6 +46,7 @@ import org.eclipse.jetty.server.session.DefaultSessionCache;
 import org.eclipse.jetty.server.session.DefaultSessionCacheFactory;
 import org.eclipse.jetty.server.session.Session;
 import org.eclipse.jetty.server.session.SessionCache;
+import org.eclipse.jetty.server.session.SessionData;
 import org.eclipse.jetty.server.session.SessionDataStoreFactory;
 import org.eclipse.jetty.server.session.SessionHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -135,12 +136,12 @@ public abstract class AbstractClusteredSessionScavengingTest extends AbstractTes
                     Session s1 = ((DefaultSessionCache)m1.getSessionCache()).get(id);
                     assertNotNull(s1);
 
-                    Method m = s1.getClass().getMethod("getExpiry");
-                    m.setAccessible(true);
-
                     //the method is protected to use reflection s1.getSessionData().getExpiry();
-                    long expiry = (Long) m.invoke(s1, null);
-                    
+                    Method m = s1.getClass().getMethod("getSessionData");
+                    m.setAccessible(true);
+                    SessionData sessionData = (SessionData)m.invoke(s1, null);
+
+                    long expiry = sessionData.getExpiry();
                     
                     //Now do requests for the session to node2. This will update the expiry time on the session.
                     //Send requests for the next maxInactiveInterval, pausing a little between each request. 

@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -137,12 +138,14 @@ public abstract class AbstractClusteredSessionScavengingTest extends AbstractTes
                     assertNotNull(s1);
 
                     //the method is protected to use reflection s1.getSessionData().getExpiry();
-                    Method m = s1.getClass().getMethod("getSessionData");
+                    Method m = Arrays.stream(s1.getClass().getDeclaredMethods())
+                            .filter(method -> "getSessionData".equals(method.getName()))
+                            .findFirst().get();
                     m.setAccessible(true);
                     SessionData sessionData = (SessionData)m.invoke(s1, null);
 
                     long expiry = sessionData.getExpiry();
-                    
+
                     //Now do requests for the session to node2. This will update the expiry time on the session.
                     //Send requests for the next maxInactiveInterval, pausing a little between each request. 
                     int requestInterval = 500; //ms pause between requests
